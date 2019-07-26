@@ -1,8 +1,11 @@
-/*
- * Scheduler.h
- *
- *  Created on: 14 jul. 2019
- *      Author: Rommel
+/** ************************************************************************************************
+ *  \file       Kernel.h
+ *  \brief      Hardware independent part of the ECC hardware selftest (header file)
+ *  \date       2015-08-03
+ *  \revision   $Revision: 1.5 $
+ *  \author     Rommel García Hernández
+ *  \copyright  Continental Automotive 2015
+ *  Implements the hardware independent part of the the ECC selftest for all processor platforms.
  */
 
 #ifndef INCLUDE_KERNEL_H_
@@ -39,46 +42,51 @@
                  "reti    \n\t" \
                );
 
-/*
- * @startuml
-    participant "app: Application" as app
-    participant "cm: ContentManager" as cm
-    participant "item: DownloadItem" as item
+/**********************************************************************************************************************
+ *  KernelInit()
+ *********************************************************************************************************************/
+/*! \brief         Initialize the seed
+ *  \details       This function generates the internal seed state using the provided entropy source.
+ *                 Furthermore, this function can be used to update the seed state with new entropy
+ *  \param[in]     cryptoKeyId             Holds the identifier of the key for which a new seed shall be generated.
+ *  \param[in]     entropyPtr              Holds a pointer to the memory location which contains the
+ *                                         data to feed the entropy.
+ *  \param[in]     entropyLength           Contains the length of the entropy in bytes.
+ *  \return        E_OK                    Request successful.
+ *                 E_NOT_OK                Request failed.
+ *                 CRYPTO_E_BUSY           Request failed, Crypto Driver Object is busy.
+ *                 CRYPTO_E_SMALL_BUFFER   Request failed, the provided buffer is too small to store the result.
+ *  \pre           nothing
+ *
+ *  \startuml
+ *    Sender->Receiver  : Command()
+ *    Sender<--Receiver : Ack()
+ *  \enduml
+ *********************************************************************************************************************/
+void KernelInit(void);
 
-    activate app
-    activate cm
 
-    note over app: User enters media info page
-
-    note over app: Check if item exists
-    app->cm: findItem(itemId)
-    cm->cm: lookup(itemId)
-
-    alt item found
-        cm-->app: item
-    else not found
-        cm-->app: null
-        app->cm: createItem(itemId, contentURL)
-        cm->item: new(itemId, contentURL)
-        activate item
-        cm-->app: item
-
-        app->cm: loadMetadata()
-        note over cm
-            Download and parse manifest, save in db
-        end note
-        cm-->app: onTracksAvailable
-        cm-->app: onDownloadMetadata
-        note over app: * See //track-selection// flow
-    end group
-    note over app: app is ready to start downloading
-    app->item: startDownload()
-
-    @enduml
- * */
+/**********************************************************************************************************************
+ *  KernelRun()
+ *********************************************************************************************************************/
+/*! \brief         Initialize the seed
+ *  \details       This function generates the internal seed state using the provided entropy source.
+ *                 Furthermore, this function can be used to update the seed state with new entropy
+ *  \param[in]     cryptoKeyId             Holds the identifier of the key for which a new seed shall be generated.
+ *  \param[in]     entropyPtr              Holds a pointer to the memory location which contains the
+ *                                         data to feed the entropy.
+ *  \param[in]     entropyLength           Contains the length of the entropy in bytes.
+ *  \return        E_OK                    Request successful.
+ *                 E_NOT_OK                Request failed.
+ *                 CRYPTO_E_BUSY           Request failed, Crypto Driver Object is busy.
+ *                 CRYPTO_E_SMALL_BUFFER   Request failed, the provided buffer is too small to store the result.
+ *  \pre           nothing
+ *
+ *  \startuml
+ *    Sender->Receiver  : Command()
+ *    Sender<--Receiver : Ack()
+ *  \enduml
+ *********************************************************************************************************************/
 void KernelRun(void);
-void KernelInitTimer(void);
-void KernelCallBack();
-
 
 #endif /* INCLUDE_KERNEL_H_ */

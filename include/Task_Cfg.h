@@ -8,10 +8,10 @@
 #ifndef INCLUDE_TASK_CFG_H_
 #define INCLUDE_TASK_CFG_H_
 
-#include "Task.h"
+#include "Scheduler.h"
 
-#define NUMBER_OF_TASKS 3
+#define NUMBER_OF_TASKS 6
 
-extern const TaskControlBlock_t Tasks[NUMBER_OF_TASKS];
+extern TaskControlBlock_t Tasks[NUMBER_OF_TASKS];
 
 #endif /* INCLUDE_TASK_CFG_H_ */

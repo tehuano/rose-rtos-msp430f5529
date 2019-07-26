@@ -2,19 +2,21 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-CG_TOOL_ROOT := /opt/ti/ccs900/ccs/tools/compiler/ti-cgt-msp430_18.12.1.LTS
+SHELL = cmd.exe
+
+CG_TOOL_ROOT := C:/ti/ccs900/ccs/tools/compiler/ti-cgt-msp430_18.12.1.LTS
 
 GEN_OPTS__FLAG := 
 GEN_CMDS__FLAG := 
 
 ORDERED_OBJS += \
-"./src/Behavior.obj" \
 "./src/Hardware.obj" \
 "./src/Kernel.obj" \
 "./src/Scheduler.obj" \
-"./src/Task.obj" \
 "./src/Task_Cfg.obj" \
+"./src/Tasks.obj" \
 "./src/main.obj" \
+"./src/sha2.obj" \
 "../lnk_msp430f5529.cmd" \
 $(GEN_CMDS__FLAG) \
 -llibmath.a \
@@ -22,8 +24,8 @@ $(GEN_CMDS__FLAG) \
 
 -include ../makefile.init
 
-RM := rm -rf
-RMDIR := rm -rf
+RM := DEL /F
+RMDIR := RMDIR /S/Q
 
 # All of the sources participating in the build are defined here
 -include sources.mk
@@ -147,22 +149,22 @@ all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 rose-rtos-msp430f5529.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: MSP430 Linker'
-	"/opt/ti/ccs900/ccs/tools/compiler/ti-cgt-msp430_18.12.1.LTS/bin/cl430" -vmspx --data_model=restricted --use_hw_mpy=F5 --advice:power=all --define=__MSP430F5529__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 -z -m"rose-rtos-msp430f5529.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"/opt/ti/ccs900/ccs/ccs_base/msp430/include" -i"/opt/ti/ccs900/ccs/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"/opt/ti/ccs900/ccs/tools/compiler/ti-cgt-msp430_18.12.1.LTS/lib" -i"/opt/ti/ccs900/ccs/tools/compiler/ti-cgt-msp430_18.12.1.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="rose-rtos-msp430f5529_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "rose-rtos-msp430f5529.out" $(ORDERED_OBJS)
+	"C:/ti/ccs900/ccs/tools/compiler/ti-cgt-msp430_18.12.1.LTS/bin/cl430" -vmspx --data_model=restricted --use_hw_mpy=F5 --advice:power=all --define=__MSP430F5529__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 -z -m"rose-rtos-msp430f5529.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccs900/ccs/ccs_base/msp430/include" -i"C:/ti/ccs900/ccs/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccs900/ccs/tools/compiler/ti-cgt-msp430_18.12.1.LTS/lib" -i"C:/ti/ccs900/ccs/tools/compiler/ti-cgt-msp430_18.12.1.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="rose-rtos-msp430f5529_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "rose-rtos-msp430f5529.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 
 rose-rtos-msp430f5529.hex: $(EXE_OUTPUTS)
 	@echo 'Building files: $(strip $(EXE_OUTPUTS__QUOTED))'
 	@echo 'Invoking: MSP430 Hex Utility'
-	"/opt/ti/ccs900/ccs/tools/compiler/ti-cgt-msp430_18.12.1.LTS/bin/hex430" --memwidth=8 --romwidth=8 -o "rose-rtos-msp430f5529.hex" $(EXE_OUTPUTS__QUOTED)
+	"C:/ti/ccs900/ccs/tools/compiler/ti-cgt-msp430_18.12.1.LTS/bin/hex430" --memwidth=8 --romwidth=8 -o "rose-rtos-msp430f5529.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building: $(strip $(EXE_OUTPUTS__QUOTED))'
 	@echo ' '
 
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "src/Behavior.obj" "src/Hardware.obj" "src/Kernel.obj" "src/Scheduler.obj" "src/Task.obj" "src/Task_Cfg.obj" "src/main.obj" 
-	-$(RM) "src/Behavior.d" "src/Hardware.d" "src/Kernel.d" "src/Scheduler.d" "src/Task.d" "src/Task_Cfg.d" "src/main.d" 
+	-$(RM) "src\Hardware.obj" "src\Kernel.obj" "src\Scheduler.obj" "src\Task_Cfg.obj" "src\Tasks.obj" "src\main.obj" "src\sha2.obj" 
+	-$(RM) "src\Hardware.d" "src\Kernel.d" "src\Scheduler.d" "src\Task_Cfg.d" "src\Tasks.d" "src\main.d" "src\sha2.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

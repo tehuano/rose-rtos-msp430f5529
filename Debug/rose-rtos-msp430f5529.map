@@ -1,10 +1,10 @@
 ******************************************************************************
-                  MSP430 Linker Unix v18.12.1                  
+                  MSP430 Linker PC v18.12.1                    
 ******************************************************************************
->> Linked Fri Jul 19 19:43:50 2019
+>> Linked Fri Jul 26 00:58:25 2019
 
 OUTPUT FILE NAME:   <rose-rtos-msp430f5529.out>
-ENTRY POINT SYMBOL: "_c_int00_noargs"  address: 00004400
+ENTRY POINT SYMBOL: "_c_int00_noargs"  address: 00004434
 
 
 MEMORY CONFIGURATION
@@ -19,8 +19,8 @@ MEMORY CONFIGURATION
   INFOB                 00001900   00000080  00000000  00000080  RWIX
   INFOA                 00001980   00000080  00000000  00000080  RWIX
   USBRAM                00001c00   00000800  00000000  00000800  RWIX
-  RAM                   00002400   00002000  000000a4  00001f5c  RWIX
-  FLASH                 00004400   0000bb80  00000048  0000bb38  RWIX
+  RAM                   00002400   00002000  0000016a  00001e96  RWIX
+  FLASH                 00004400   0000bb80  00000222  0000b95e  RWIX
   INT00                 0000ff80   00000002  00000000  00000002  RWIX
   INT01                 0000ff82   00000002  00000000  00000002  RWIX
   INT02                 0000ff84   00000002  00000000  00000002  RWIX
@@ -85,7 +85,7 @@ MEMORY CONFIGURATION
   INT61                 0000fffa   00000002  00000002  00000000  RWIX
   INT62                 0000fffc   00000002  00000002  00000000  RWIX
   RESET                 0000fffe   00000002  00000002  00000000  RWIX
-  FLASH2                00010000   00014400  000000c6  0001433a  RWIX
+  FLASH2                00010000   00014400  000011da  00013226  RWIX
 
 
 SECTION ALLOCATION MAP
@@ -93,28 +93,39 @@ SECTION ALLOCATION MAP
  output                                  attributes/
 section   page    origin      length       input sections
 --------  ----  ----------  ----------   ----------------
-.bss       0    00002400    00000004     UNINITIALIZED
-                  00002400    00000004     Hardware.obj (.bss)
+.data      0    00002400    000000c0     UNINITIALIZED
+                  00002400    000000a8     Task_Cfg.obj (.data:Tasks)
+                  000024a8    00000012     Tasks.obj (.data)
+                  000024ba    00000006     Kernel.obj (.data)
+
+.bss       0    000024c0    0000000a     UNINITIALIZED
+                  000024c0    0000000a     Hardware.obj (.bss)
 
 .stack     0    00004360    000000a0     UNINITIALIZED
                   00004360    00000004     rts430x_lc_rd_eabi.lib : boot.c.obj (.stack)
                   00004364    0000009c     --HOLE--
 
 .text:_isr 
-*          0    00004400    00000036     
-                  00004400    0000001c     rts430x_lc_rd_eabi.lib : boot.c.obj (.text:_isr:_c_int00_noargs)
-                  0000441c    00000012     Hardware.obj (.text:_isr:Timer_A0)
-                  0000442e    00000008     rts430x_lc_rd_eabi.lib : isr_trap.asm.obj (.text:_isr:__TI_ISR_TRAP)
+*          0    00004400    00000058     
+                  00004400    00000034     Hardware.obj (.text:_isr:Timer_A2)
+                  00004434    0000001c     rts430x_lc_rd_eabi.lib : boot.c.obj (.text:_isr:_c_int00_noargs)
+                  00004450    00000008                            : isr_trap.asm.obj (.text:_isr:__TI_ISR_TRAP)
 
-.cinit     0    00004436    00000012     
-                  00004436    00000006     (.cinit..bss.load) [load image, compression = zero_init]
-                  0000443c    00000004     (__TI_handler_table)
-                  00004440    00000008     (__TI_cinit_table)
+.cinit     0    00004598    0000008a     
+                  00004598    00000068     (.cinit..data.load) [load image, compression = lzss]
+                  00004600    0000000c     (__TI_handler_table)
+                  0000460c    00000006     (.cinit..bss.load) [load image, compression = zero_init]
+                  00004612    00000010     (__TI_cinit_table)
 
 .binit     0    00004400    00000000     
 
 .init_array 
 *          0    00004400    00000000     UNINITIALIZED
+
+.const     0    00004458    00000140     
+                  00004458    00000100     sha2.obj (.const:K256)
+                  00004558    00000020     sha2.obj (.const:Initial_Hash)
+                  00004578    00000020     sha2.obj (.const:Initial_Hash_224)
 
 RTC        0    0000ffd2    00000002     
                   0000ffd2    00000002     rts430x_lc_rd_eabi.lib : int41.asm.obj (.int41)
@@ -128,7 +139,7 @@ TIMER2_A1
 
 TIMER2_A0 
 *          0    0000ffd8    00000002     
-                  0000ffd8    00000002     rts430x_lc_rd_eabi.lib : int44.asm.obj (.int44)
+                  0000ffd8    00000002     Hardware.obj (.int44)
 
 USCI_B1    0    0000ffda    00000002     
                   0000ffda    00000002     rts430x_lc_rd_eabi.lib : int45.asm.obj (.int45)
@@ -159,7 +170,7 @@ TIMER0_A1
 
 TIMER0_A0 
 *          0    0000ffea    00000002     
-                  0000ffea    00000002     Hardware.obj (.int53)
+                  0000ffea    00000002     rts430x_lc_rd_eabi.lib : int53.asm.obj (.int53)
 
 ADC12      0    0000ffec    00000002     
                   0000ffec    00000002     rts430x_lc_rd_eabi.lib : int54.asm.obj (.int54)
@@ -193,75 +204,140 @@ SYSNMI     0    0000fffc    00000002
 .reset     0    0000fffe    00000002     
                   0000fffe    00000002     rts430x_lc_rd_eabi.lib : boot.c.obj (.reset)
 
-.text      0    00010000    000000c6     
-                  00010000    00000054     rts430x_lc_rd_eabi.lib : autoinit.c.obj (.text:__TI_auto_init_nobinit_nopinit_hold_wdt:__TI_auto_init_nobinit_nopinit_hold_wdt)
-                  00010054    00000024                            : copy_zero_init.c.obj (.text:decompress:ZI:__TI_zero_init_nomemset:__TI_zero_init_nomemset)
-                  00010078    0000001a     Hardware.obj (.text:HardwareInitTimerA0)
-                  00010092    00000012     main.obj (.text:main)
-                  000100a4    0000000e     Hardware.obj (.text:HardwareInitIO)
-                  000100b2    00000008     Hardware.obj (.text:HardwareToggleP47)
-                  000100ba    00000006     rts430x_lc_rd_eabi.lib : exit.c.obj (.text:abort)
-                  000100c0    00000004                            : pre_init.c.obj (.text:_system_pre_init)
-                  000100c4    00000002                            : startup.c.obj (.text:_system_post_cinit)
+.text      0    00010000    000011da     
+                  00010000    000003b0     sha2.obj (.text:shaHelper)
+                  000103b0    00000280     rts430x_lc_rd_eabi.lib : frcmpyd.c.obj (.text:__TI_frcmpyd)
+                  00010630    00000266                            : mpyd.c.obj (.text:__mspabi_mpyd)
+                  00010896    0000022a     sha2.obj (.text:SHA_2)
+                  00010ac0    000000c4     Tasks.obj (.text:sha256_example)
+                  00010b84    000000b8     Scheduler.obj (.text:Scheduler_RunTasks)
+                  00010c3c    0000008c     rts430x_lc_rd_eabi.lib : cvtdf.c.obj (.text:__mspabi_cvtdf)
+                  00010cc8    00000080                            : fltuld.c.obj (.text:__mspabi_fltuld)
+                  00010d48    00000076                            : copy_decompress_lzss.c.obj (.text:decompress:lzss:__TI_decompress_lzss)
+                  00010dbe    0000006e     Tasks.obj (.text:Task_10ms)
+                  00010e2c    00000060     Tasks.obj (.text:Task_5ms)
+                  00010e8c    00000054     rts430x_lc_rd_eabi.lib : autoinit.c.obj (.text:__TI_auto_init_nobinit_nopinit_hold_wdt:__TI_auto_init_nobinit_nopinit_hold_wdt)
+                  00010ee0    0000003e                            : asr32.asm.obj (.text:l_asr_const)
+                  00010f1e    0000003e                            : lsl32.asm.obj (.text:l_lsl_const)
+                  00010f5c    0000003e                            : lsr32.asm.obj (.text:l_lsr_const)
+                  00010f9a    0000003a                            : lsr64.c.obj (.text:__mspabi_srlll)
+                  00010fd4    00000028     Scheduler.obj (.text:Scheduler_InitTasks)
+                  00010ffc    00000024     rts430x_lc_rd_eabi.lib : copy_zero_init.c.obj (.text:decompress:ZI:__TI_zero_init_nomemset:__TI_zero_init_nomemset)
+                  00011020    00000024                            : mult32_f5hw.asm.obj (.text)
+                  00011044    00000020     Tasks.obj (.text:Task_10msInit)
+                  00011064    0000001c     Tasks.obj (.text:Task_Aperiodic_ADCInit)
+                  00011080    0000001a     Hardware.obj (.text:HardwareInitTimerA2)
+                  0001109a    00000018     rts430x_lc_rd_eabi.lib : mult16_f5hw.asm.obj (.text)
+                  000110b2    00000016                            : memset.c.obj (.text:memset)
+                  000110c8    00000014     Kernel.obj (.text:KernelInit)
+                  000110dc    00000014     rts430x_lc_rd_eabi.lib : memcpy.c.obj (.text:memcpy)
+                  000110f0    00000012     Hardware.obj (.text:HardwareGetTick)
+                  00011102    00000012     Kernel.obj (.text:KernelRun)
+                  00011114    00000012     Tasks.obj (.text:Task_Aperiodic_ADC)
+                  00011126    00000012     Tasks.obj (.text:Task_Aperiodic_ButtonInit)
+                  00011138    00000012     rts430x_lc_rd_eabi.lib : copy_decompress_none.c.obj (.text:decompress:none:__TI_decompress_none)
+                  0001114a    00000012                            : rotl32.asm.obj (.text)
+                  0001115c    00000010     Tasks.obj (.text:Task_80ms)
+                  0001116c    00000010     rts430x_lc_rd_eabi.lib : asr32.asm.obj (.text:l_asr)
+                  0001117c    00000010                            : lsr32.asm.obj (.text:l_lsr)
+                  0001118c    0000000e     Tasks.obj (.text:Task_Aperiodic_Button)
+                  0001119a    0000000c     main.obj (.text:main)
+                  000111a6    0000000a     Tasks.obj (.text:Task_PeriodicServer6ms)
+                  000111b0    0000000a     Tasks.obj (.text:Task_PeriodicServer6msInit)
+                  000111ba    00000006     rts430x_lc_rd_eabi.lib : fltud.c.obj (.text:__mspabi_fltud)
+                  000111c0    00000006                            : exit.c.obj (.text:abort)
+                  000111c6    00000004                            : pre_init.c.obj (.text:_system_pre_init)
+                  000111ca    00000002     Hardware.obj (.text:HardwareInitIO)
+                  000111cc    00000002     Tasks.obj (.text:Task_20ms)
+                  000111ce    00000002     Tasks.obj (.text:Task_20msInit)
+                  000111d0    00000002     Tasks.obj (.text:Task_40ms)
+                  000111d2    00000002     Tasks.obj (.text:Task_40msInit)
+                  000111d4    00000002     Tasks.obj (.text:Task_5msInit)
+                  000111d6    00000002     Tasks.obj (.text:Task_80msInit)
+                  000111d8    00000002     rts430x_lc_rd_eabi.lib : startup.c.obj (.text:_system_post_cinit)
 
 MODULE SUMMARY
 
-       Module                 code   ro data   rw data
-       ------                 ----   -------   -------
-    ./src/
-       Hardware.obj           66     2         4      
-       main.obj               18     0         0      
-    +--+----------------------+------+---------+---------+
-       Total:                 84     2         4      
-                                                      
-    /opt/ti/ccs900/ccs/tools/compiler/ti-cgt-msp430_18.12.1.LTS/lib/rts430x_lc_rd_eabi.lib
-       autoinit.c.obj         84     0         0      
-       copy_zero_init.c.obj   36     0         0      
-       boot.c.obj             28     2         0      
-       isr_trap.asm.obj       8      0         0      
-       exit.c.obj             6      0         0      
-       pre_init.c.obj         4      0         0      
-       int41.asm.obj          0      2         0      
-       int42.asm.obj          0      2         0      
-       int43.asm.obj          0      2         0      
-       int44.asm.obj          0      2         0      
-       int45.asm.obj          0      2         0      
-       int46.asm.obj          0      2         0      
-       int47.asm.obj          0      2         0      
-       int48.asm.obj          0      2         0      
-       int49.asm.obj          0      2         0      
-       int50.asm.obj          0      2         0      
-       int51.asm.obj          0      2         0      
-       int52.asm.obj          0      2         0      
-       int54.asm.obj          0      2         0      
-       int55.asm.obj          0      2         0      
-       int56.asm.obj          0      2         0      
-       int57.asm.obj          0      2         0      
-       int58.asm.obj          0      2         0      
-       int59.asm.obj          0      2         0      
-       int60.asm.obj          0      2         0      
-       int61.asm.obj          0      2         0      
-       int62.asm.obj          0      2         0      
-       startup.c.obj          2      0         0      
-    +--+----------------------+------+---------+---------+
-       Total:                 168    44        0      
-                                                      
-       Stack:                 0      0         160    
-       Linker Generated:      0      18        0      
-    +--+----------------------+------+---------+---------+
-       Grand Total:           252    64        164    
+       Module                       code   ro data   rw data
+       ------                       ----   -------   -------
+    .\src\
+       sha2.obj                     1498   320       0      
+       Tasks.obj                    560    0         18     
+       Scheduler.obj                224    0         0      
+       Task_Cfg.obj                 0      0         168    
+       Hardware.obj                 98     2         10     
+       Kernel.obj                   38     0         6      
+       main.obj                     12     0         0      
+    +--+----------------------------+------+---------+---------+
+       Total:                       2430   322       202    
+                                                            
+    C:\ti\ccs900\ccs\tools\compiler\ti-cgt-msp430_18.12.1.LTS\lib\rts430x_lc_rd_eabi.lib
+       frcmpyd.c.obj                640    0         0      
+       mpyd.c.obj                   614    0         0      
+       cvtdf.c.obj                  140    0         0      
+       fltuld.c.obj                 128    0         0      
+       copy_decompress_lzss.c.obj   118    0         0      
+       autoinit.c.obj               84     0         0      
+       asr32.asm.obj                78     0         0      
+       lsr32.asm.obj                78     0         0      
+       lsl32.asm.obj                62     0         0      
+       lsr64.c.obj                  58     0         0      
+       copy_zero_init.c.obj         36     0         0      
+       mult32_f5hw.asm.obj          36     0         0      
+       boot.c.obj                   28     2         0      
+       mult16_f5hw.asm.obj          24     0         0      
+       memset.c.obj                 22     0         0      
+       memcpy.c.obj                 20     0         0      
+       copy_decompress_none.c.obj   18     0         0      
+       rotl32.asm.obj               18     0         0      
+       isr_trap.asm.obj             8      0         0      
+       exit.c.obj                   6      0         0      
+       fltud.c.obj                  6      0         0      
+       pre_init.c.obj               4      0         0      
+       int41.asm.obj                0      2         0      
+       int42.asm.obj                0      2         0      
+       int43.asm.obj                0      2         0      
+       int45.asm.obj                0      2         0      
+       int46.asm.obj                0      2         0      
+       int47.asm.obj                0      2         0      
+       int48.asm.obj                0      2         0      
+       int49.asm.obj                0      2         0      
+       int50.asm.obj                0      2         0      
+       int51.asm.obj                0      2         0      
+       int52.asm.obj                0      2         0      
+       int53.asm.obj                0      2         0      
+       int54.asm.obj                0      2         0      
+       int55.asm.obj                0      2         0      
+       int56.asm.obj                0      2         0      
+       int57.asm.obj                0      2         0      
+       int58.asm.obj                0      2         0      
+       int59.asm.obj                0      2         0      
+       int60.asm.obj                0      2         0      
+       int61.asm.obj                0      2         0      
+       int62.asm.obj                0      2         0      
+       startup.c.obj                2      0         0      
+    +--+----------------------------+------+---------+---------+
+       Total:                       2228   44        0      
+                                                            
+       Stack:                       0      0         160    
+       Linker Generated:            0      138       0      
+    +--+----------------------------+------+---------+---------+
+       Grand Total:                 4658   504       362    
 
 
 LINKER GENERATED COPY TABLES
 
-__TI_cinit_table @ 00004440 records: 1, size/record: 8, table size: 8
-	.bss: load addr=00004436, load size=00000006 bytes, run addr=00002400, run size=00000004 bytes, compression=zero_init
+__TI_cinit_table @ 00004612 records: 2, size/record: 8, table size: 16
+	.data: load addr=00004598, load size=00000068 bytes, run addr=00002400, run size=000000c0 bytes, compression=lzss
+	.bss: load addr=0000460c, load size=00000006 bytes, run addr=000024c0, run size=0000000a bytes, compression=zero_init
 
 
 LINKER GENERATED HANDLER TABLE
 
-__TI_handler_table @ 0000443c records: 1, size/record: 4, table size: 4
+__TI_handler_table @ 00004600 records: 3, size/record: 4, table size: 12
 	index: 0, handler: __TI_zero_init
+	index: 1, handler: __TI_decompress_lzss
+	index: 2, handler: __TI_decompress_none
 
 
 GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name 
@@ -350,7 +426,7 @@ address   name
 00000732  ADC12MEM9                              
 00000733  ADC12MEM9_H                            
 00000732  ADC12MEM9_L                            
-000100ba  C$$EXIT                                
+000111c0  C$$EXIT                                
 000008c0  CBCTL0                                 
 000008c1  CBCTL0_H                               
 000008c0  CBCTL0_L                               
@@ -436,10 +512,11 @@ address   name
 00000146  FCTL4                                  
 00000147  FCTL4_H                                
 00000146  FCTL4_L                                
-000100a4  HardwareInitIO                         
-00010078  HardwareInitTimerA0                    
-000100b2  HardwareToggleP47                      
-000100b2  KernelCallBack                         
+000110f0  HardwareGetTick                        
+000111ca  HardwareInitIO                         
+00011080  HardwareInitTimerA2                    
+000110c8  KernelInit                             
+00011102  KernelRun                              
 000004c4  MAC                                    
 000004da  MAC32H                                 
 000004db  MAC32H_H                               
@@ -686,6 +763,7 @@ address   name
 00000104  SFRRPCR                                
 00000105  SFRRPCR_H                              
 00000104  SFRRPCR_L                              
+00010896  SHA_2                                  
 000004ce  SUMEXT                                 
 000004cf  SUMEXT_H                               
 000004ce  SUMEXT_L                               
@@ -731,6 +809,8 @@ address   name
 0000019a  SYSUNIV                                
 0000019b  SYSUNIV_H                              
 0000019a  SYSUNIV_L                              
+00010fd4  Scheduler_InitTasks                    
+00010b84  Scheduler_RunTasks                     
 00000352  TA0CCR0                                
 00000354  TA0CCR1                                
 00000356  TA0CCR2                                
@@ -783,7 +863,24 @@ address   name
 000003e0  TB0EX0                                 
 000003ee  TB0IV                                  
 000003d0  TB0R                                   
-0000441c  Timer_A0                               
+00010dbe  Task_10ms                              
+00011044  Task_10msInit                          
+000111cc  Task_20ms                              
+000111ce  Task_20msInit                          
+000111d0  Task_40ms                              
+000111d2  Task_40msInit                          
+00010e2c  Task_5ms                               
+000111d4  Task_5msInit                           
+0001115c  Task_80ms                              
+000111d6  Task_80msInit                          
+00011114  Task_Aperiodic_ADC                     
+00011064  Task_Aperiodic_ADCInit                 
+0001118c  Task_Aperiodic_Button                  
+00011126  Task_Aperiodic_ButtonInit              
+000111a6  Task_PeriodicServer6ms                 
+000111b0  Task_PeriodicServer6msInit             
+00002400  Tasks                                  
+00004400  Timer_A2                               
 000005d0  UCA0ABCTL                              
 000005c6  UCA0BRW                                
 000005c7  UCA0BRW_H                              
@@ -1024,12 +1121,15 @@ address   name
 0000015c  WDTCTL_L                               
 00004400  __STACK_END                            
 000000a0  __STACK_SIZE                           
-00004440  __TI_CINIT_Base                        
-00004448  __TI_CINIT_Limit                       
-0000443c  __TI_Handler_Table_Base                
-00004440  __TI_Handler_Table_Limit               
-0000442e  __TI_ISR_TRAP                          
-00010000  __TI_auto_init_nobinit_nopinit_hold_wdt
+00004612  __TI_CINIT_Base                        
+00004622  __TI_CINIT_Limit                       
+00004600  __TI_Handler_Table_Base                
+0000460c  __TI_Handler_Table_Limit               
+00004450  __TI_ISR_TRAP                          
+00010e8c  __TI_auto_init_nobinit_nopinit_hold_wdt
+00010d48  __TI_decompress_lzss                   
+00011138  __TI_decompress_none                   
+000103b0  __TI_frcmpyd                           
 0000ffd2  __TI_int41                             
 0000ffd4  __TI_int42                             
 0000ffd6  __TI_int43                             
@@ -1055,15 +1155,75 @@ address   name
 ffffffff  __TI_pprof_out_hndl                    
 ffffffff  __TI_prof_data_size                    
 ffffffff  __TI_prof_data_start                   
-00010054  __TI_zero_init_nomemset                
+00010ffc  __TI_zero_init_nomemset                
 ffffffff  __c_args__                             
-00004400  _c_int00_noargs                        
+00010c3c  __mspabi_cvtdf                         
+000111ba  __mspabi_fltud                         
+00010cc8  __mspabi_fltuld                        
+00010630  __mspabi_mpyd                          
+0001109a  __mspabi_mpyi_f5hw                     
+00011020  __mspabi_mpyl_f5hw                     
+0001114a  __mspabi_rlll                          
+00010f56  __mspabi_slll_1                        
+00010f32  __mspabi_slll_10                       
+00010f2e  __mspabi_slll_11                       
+00010f2a  __mspabi_slll_12                       
+00010f26  __mspabi_slll_13                       
+00010f22  __mspabi_slll_14                       
+00010f1e  __mspabi_slll_15                       
+00010f52  __mspabi_slll_2                        
+00010f4e  __mspabi_slll_3                        
+00010f4a  __mspabi_slll_4                        
+00010f46  __mspabi_slll_5                        
+00010f42  __mspabi_slll_6                        
+00010f3e  __mspabi_slll_7                        
+00010f3a  __mspabi_slll_8                        
+00010f36  __mspabi_slll_9                        
+0001116c  __mspabi_sral                          
+00010f18  __mspabi_sral_1                        
+00010ef4  __mspabi_sral_10                       
+00010ef0  __mspabi_sral_11                       
+00010eec  __mspabi_sral_12                       
+00010ee8  __mspabi_sral_13                       
+00010ee4  __mspabi_sral_14                       
+00010ee0  __mspabi_sral_15                       
+00010f14  __mspabi_sral_2                        
+00010f10  __mspabi_sral_3                        
+00010f0c  __mspabi_sral_4                        
+00010f08  __mspabi_sral_5                        
+00010f04  __mspabi_sral_6                        
+00010f00  __mspabi_sral_7                        
+00010efc  __mspabi_sral_8                        
+00010ef8  __mspabi_sral_9                        
+0001117c  __mspabi_srll                          
+00010f94  __mspabi_srll_1                        
+00010f70  __mspabi_srll_10                       
+00010f6c  __mspabi_srll_11                       
+00010f68  __mspabi_srll_12                       
+00010f64  __mspabi_srll_13                       
+00010f60  __mspabi_srll_14                       
+00010f5c  __mspabi_srll_15                       
+00010f90  __mspabi_srll_2                        
+00010f8c  __mspabi_srll_3                        
+00010f88  __mspabi_srll_4                        
+00010f84  __mspabi_srll_5                        
+00010f80  __mspabi_srll_6                        
+00010f7c  __mspabi_srll_7                        
+00010f78  __mspabi_srll_8                        
+00010f74  __mspabi_srll_9                        
+00010f9a  __mspabi_srlll                         
+00004434  _c_int00_noargs                        
 0000fffe  _reset_vector                          
 00004360  _stack                                 
-000100c4  _system_post_cinit                     
-000100c0  _system_pre_init                       
-000100ba  abort                                  
-00010092  main                                   
+000111d8  _system_post_cinit                     
+000111c6  _system_pre_init                       
+000111c0  abort                                  
+0001119a  main                                   
+000110dc  memcpy                                 
+000110b2  memset                                 
+00010ac0  sha256_example                         
+00010000  shaHelper                              
+000024bc  sys_tick                               
 
 
 GLOBAL SYMBOLS: SORTED BY Symbol Address 
@@ -1819,15 +1979,17 @@ address   name
 000023fd  USBIEPBBAY_7                           
 000023fe  USBIEPBCTY_7                           
 000023ff  USBIEPSIZXY_7                          
+00002400  Tasks                                  
+000024bc  sys_tick                               
 00004360  _stack                                 
+00004400  Timer_A2                               
 00004400  __STACK_END                            
-00004400  _c_int00_noargs                        
-0000441c  Timer_A0                               
-0000442e  __TI_ISR_TRAP                          
-0000443c  __TI_Handler_Table_Base                
-00004440  __TI_CINIT_Base                        
-00004440  __TI_Handler_Table_Limit               
-00004448  __TI_CINIT_Limit                       
+00004434  _c_int00_noargs                        
+00004450  __TI_ISR_TRAP                          
+00004600  __TI_Handler_Table_Base                
+0000460c  __TI_Handler_Table_Limit               
+00004612  __TI_CINIT_Base                        
+00004622  __TI_CINIT_Limit                       
 0000ffd2  __TI_int41                             
 0000ffd4  __TI_int42                             
 0000ffd6  __TI_int43                             
@@ -1851,20 +2013,102 @@ address   name
 0000fffa  __TI_int61                             
 0000fffc  __TI_int62                             
 0000fffe  _reset_vector                          
-00010000  __TI_auto_init_nobinit_nopinit_hold_wdt
-00010054  __TI_zero_init_nomemset                
-00010078  HardwareInitTimerA0                    
-00010092  main                                   
-000100a4  HardwareInitIO                         
-000100b2  HardwareToggleP47                      
-000100b2  KernelCallBack                         
-000100ba  C$$EXIT                                
-000100ba  abort                                  
-000100c0  _system_pre_init                       
-000100c4  _system_post_cinit                     
+00010000  shaHelper                              
+000103b0  __TI_frcmpyd                           
+00010630  __mspabi_mpyd                          
+00010896  SHA_2                                  
+00010ac0  sha256_example                         
+00010b84  Scheduler_RunTasks                     
+00010c3c  __mspabi_cvtdf                         
+00010cc8  __mspabi_fltuld                        
+00010d48  __TI_decompress_lzss                   
+00010dbe  Task_10ms                              
+00010e2c  Task_5ms                               
+00010e8c  __TI_auto_init_nobinit_nopinit_hold_wdt
+00010ee0  __mspabi_sral_15                       
+00010ee4  __mspabi_sral_14                       
+00010ee8  __mspabi_sral_13                       
+00010eec  __mspabi_sral_12                       
+00010ef0  __mspabi_sral_11                       
+00010ef4  __mspabi_sral_10                       
+00010ef8  __mspabi_sral_9                        
+00010efc  __mspabi_sral_8                        
+00010f00  __mspabi_sral_7                        
+00010f04  __mspabi_sral_6                        
+00010f08  __mspabi_sral_5                        
+00010f0c  __mspabi_sral_4                        
+00010f10  __mspabi_sral_3                        
+00010f14  __mspabi_sral_2                        
+00010f18  __mspabi_sral_1                        
+00010f1e  __mspabi_slll_15                       
+00010f22  __mspabi_slll_14                       
+00010f26  __mspabi_slll_13                       
+00010f2a  __mspabi_slll_12                       
+00010f2e  __mspabi_slll_11                       
+00010f32  __mspabi_slll_10                       
+00010f36  __mspabi_slll_9                        
+00010f3a  __mspabi_slll_8                        
+00010f3e  __mspabi_slll_7                        
+00010f42  __mspabi_slll_6                        
+00010f46  __mspabi_slll_5                        
+00010f4a  __mspabi_slll_4                        
+00010f4e  __mspabi_slll_3                        
+00010f52  __mspabi_slll_2                        
+00010f56  __mspabi_slll_1                        
+00010f5c  __mspabi_srll_15                       
+00010f60  __mspabi_srll_14                       
+00010f64  __mspabi_srll_13                       
+00010f68  __mspabi_srll_12                       
+00010f6c  __mspabi_srll_11                       
+00010f70  __mspabi_srll_10                       
+00010f74  __mspabi_srll_9                        
+00010f78  __mspabi_srll_8                        
+00010f7c  __mspabi_srll_7                        
+00010f80  __mspabi_srll_6                        
+00010f84  __mspabi_srll_5                        
+00010f88  __mspabi_srll_4                        
+00010f8c  __mspabi_srll_3                        
+00010f90  __mspabi_srll_2                        
+00010f94  __mspabi_srll_1                        
+00010f9a  __mspabi_srlll                         
+00010fd4  Scheduler_InitTasks                    
+00010ffc  __TI_zero_init_nomemset                
+00011020  __mspabi_mpyl_f5hw                     
+00011044  Task_10msInit                          
+00011064  Task_Aperiodic_ADCInit                 
+00011080  HardwareInitTimerA2                    
+0001109a  __mspabi_mpyi_f5hw                     
+000110b2  memset                                 
+000110c8  KernelInit                             
+000110dc  memcpy                                 
+000110f0  HardwareGetTick                        
+00011102  KernelRun                              
+00011114  Task_Aperiodic_ADC                     
+00011126  Task_Aperiodic_ButtonInit              
+00011138  __TI_decompress_none                   
+0001114a  __mspabi_rlll                          
+0001115c  Task_80ms                              
+0001116c  __mspabi_sral                          
+0001117c  __mspabi_srll                          
+0001118c  Task_Aperiodic_Button                  
+0001119a  main                                   
+000111a6  Task_PeriodicServer6ms                 
+000111b0  Task_PeriodicServer6msInit             
+000111ba  __mspabi_fltud                         
+000111c0  C$$EXIT                                
+000111c0  abort                                  
+000111c6  _system_pre_init                       
+000111ca  HardwareInitIO                         
+000111cc  Task_20ms                              
+000111ce  Task_20msInit                          
+000111d0  Task_40ms                              
+000111d2  Task_40msInit                          
+000111d4  Task_5msInit                           
+000111d6  Task_80msInit                          
+000111d8  _system_post_cinit                     
 ffffffff  __TI_pprof_out_hndl                    
 ffffffff  __TI_prof_data_size                    
 ffffffff  __TI_prof_data_start                   
 ffffffff  __c_args__                             
 
-[796 symbols]
+[880 symbols]

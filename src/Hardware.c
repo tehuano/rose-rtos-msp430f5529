@@ -13,6 +13,7 @@
 
 #include <msp430.h>
 #include "Kernel.h"
+#include "Hardware.h"
 
 /** **********************************************************************************************
  *  \brief  ECC test structure
@@ -25,7 +26,8 @@
  *  \resolution 1
  *  \unit       None
  */
-static unsigned long int u_Hardware_Tick;
+static unsigned long long int hardware_tick;
+static unsigned int leap_cnt;
 
 /**********************************************************************************************************************
  *  HardwareInitIO()
@@ -48,8 +50,7 @@ static unsigned long int u_Hardware_Tick;
  *  \diagram       HardwareInitIO.png
  *********************************************************************************************************************/
 void HardwareInitIO() {
-    P4DIR |= BIT7;             // P4.7 como salida
-    P4OUT |= BIT7;            // Apagamos al inicio P4.7
+
 }
 
 /**********************************************************************************************************************
@@ -96,11 +97,14 @@ void HardwareToggleP47() {
  *  \synchronous   TRUE
  *  \diagram       HardwareInitTimerA0.png
  *********************************************************************************************************************/
-void HardwareInitTimerA0() {
-    TA0CCTL0 = CCIE;                   /* CCR0 interrupt enabled */
-    TA0CTL = TASSEL_2 | MC_1 | ID_3;   /* SMCLK/8, up mode */
-    TA0CCR0  = 10000;                  /* 12.5 Hz */
-    __bis_SR_register(GIE);            /* Enable maskable interrupts */
+void HardwareInitTimerA2() {
+//   TA2CTL   = TASSEL_2 + ID_0 + MC_1; /* Using SMCLK */
+//   TA2CCR0  = 104; /* 1.048576 MHz */
+//   TA2CCTL0 = CCIE; /* Enable timer interrupts */
+    TA2CTL   = TASSEL_1 | ID_0 | MC_1; // ACLK, Divider 1, Up mode
+    TA2CCR0  = 32;
+    TA2CCTL0 = CCIE; // Enable timer interrupts
+    __bis_SR_register(GIE); /* Enable maskable interrupts */
 }
 
 /**********************************************************************************************************************
@@ -123,26 +127,19 @@ void HardwareInitTimerA0() {
  *  \synchronous   TRUE
  *  \diagram       HardwareGetTick.png
  *********************************************************************************************************************/
-unsigned long int HardwareGetTick() {
-    return u_Hardware_Tick;
+unsigned long long int HardwareGetTick() {
+    return hardware_tick;
 }
 
-/* Timer A0 interrupt service routine */
-#pragma vector=TIMER0_A0_VECTOR
-__interrupt void Timer_A0 (void)
-{
-    u_Hardware_Tick++;
-    KernelCallBack();
+/* Timer A2 interrupt service routine */
+#pragma vector=TIMER2_A0_VECTOR
+__interrupt void Timer_A2 (void) {
+    //hardware_tick++;
+    if(leap_cnt < NUM_OF_INTERRUPTS_ERROR) {
+        hardware_tick++;
+        leap_cnt++;
+    } else {
+        hardware_tick += 2; /* Add an extra count to catch up */
+        leap_cnt = 0;
+    }
 }
-
-/*
- *   Changing MAX_CNT means changing the value for TA2CCR0 0.001 s = (x + 1 ticks / 32768 Hz) MAX_CNT = x ~= 32;
- *   Thus, we would set TA2CCR0 = 32; However, the error in our elapsed time will now grow faster, so leap counting is even
- *   more important! How long until we are off by 0.001 seconds? 0.001 sec = (x interrupts)(Reported time - Actual time)
- *   Reported time = 0.001 sec Actual time = 33 / 32768 Hz = 0.00100708 sec This is greater than 0.001 sec,
- *   so clock is running slow! (ie, more time has elapsed than what we assume has elapsed.) 0.001 s = (x interrupts)*(0.001s - (33/32768)) x = 141
- *   interrupts, or ~ 141 ms! Thus, our timer wouldn't stay accurate for long! Here is how we can add a leap count for this example:
- *   #pragma vector=TIMER2_A0_VECTOR __interrupt void TIMER_A2_ISR(void) { // timer and leap_cnt are global unsigned integers
- *   // *** leap_cnt counts the number of intervals until we need // to add a leap count *** if(leap_cnt < 141) { timer++; leap_cnt++; }
- *   else { timer += 2; // Add an extra count to catch up leap_cnt = 0; } }
- * */

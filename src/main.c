@@ -1,24 +1,34 @@
-#include <msp430.h> 
-#include "Kernel.h"
-#include "Task.h"
-#include "Behavior.h"
-#include "Hardware.h"
+/** ************************************************************************************************
+ *  \file       main.c
+ *
+ *  \brief      Implements the core logic of the rtos
+ *
+ *  \date       2015-08-03
+ *  \revision   $Revision: 1.5 $
+ *  \author     Andreas Menge (uidg4118)
+ *  \copyright  Continental Automotive 2015
+ *
+ *  Implements the hardware independent part of the the ECC selftest for all processor platforms.
+ */
 
-/**
- * # Sistema operativo de tiempo real con las siguientes caracterÃ­sticas.
+#include "Kernel.h"
+#include "Scheduler.h"
+
+/*
+ * # Sistema operativo de tiempo real con las siguientes caracteristicas.
  * - Sistema Operativo Cooperativo
- * - Manejo de tareas periÃ³dicas:
+ * - Manejo de tareas periódicas:
  *   - 5 ms
  *   - 20 ms
  *   - 40 ms
  *   - 80 ms
- * - Manejo de tareas AperiÃ³dicas.
+ * - Manejo de tareas Aperiódicas.
  *   - Tarea de Botón presionado/liberado
  *   - Tarea valores de ADC.
  *
- * # Details
+ * # Detalles
  * - Prioridad de tareas estáticas y definidas por el estudiante.
- * - Para cada una de las tareas el estudiante deberÃ¡ asignar un pin del microcontrolador para mostrar el estado de la tarea de la siguiente manera:
+ * - Para cada una de las tareas el estudiante deberá asignar un pin del microcontrolador para mostrar el estado de la tarea de la siguiente manera:
  *   - Flanco de subida sencillo: cambio de Blocked a Ready.
  *   - Pulso de bajada: cambio de Ready a Start
  *   - Flanco de bajada: Cambio a Blocked.
@@ -26,16 +36,16 @@
  * # Descripción de tareas
  * - Task_5ms()
  *   - Conversiones de ADC con filtrado a 8 bits
- *   - Detecciónn de estados del botónn
+ *   - Detecciónn de estados del botón
  * - Task_10ms()
- *   - Rotabit de 8 bits con espacios entre transiciÃ³n de 500 ms.
+ *   - Rotabit de 8 bits con espacios entre transición de 500 ms.
  * - Task_20ms()
- *   - VariaciÃ³n de Intensidad de un LED en forma de señal Rampa Triangular con Periodo de 2 segundos.
+ *   - Variación de Intensidad de un LED en forma de señal Rampa Triangular con Periodo de 2 segundos.
  * - Task_40ms()
- *   - Rotabit de 8 bits con espacios entre transiciÃ³n de 500 ms.
- *   - Controlar un servomotor dependiendo de un valor de entrada de ADC. (0 cuentas de ADC significa 45Â°, 255 cuentas de ADC significa 135Â°)
+ *   - Controlar un servomotor dependiendo de un valor de entrada de ADC. (0 cuentas de ADC significa 45°, 255 cuentas de ADC significa 135°)
  * - Task_80ms()
- *   - ImplementaciÃ³n Libre
+ *   - Implementación Libre
+ *
  * - Tarea de Botón presionado/liberado
  *   - Cambio de estado de un LED.
  * - Tarea valores de ADC.
@@ -43,12 +53,9 @@
  */
 
 int main(void) {
-    WDTCTL = WDTPW | WDTHOLD;   // stop watchdog timer
-    /* Initialize the timer module */
-    HardwareInitIO();
-    /* Initialize the timer module */
-    HardwareInitTimerA0();
+    /* Kernel_Init */
+    KernelInit();
     /* run everything by interrupts */
-    while (1) {}
+    KernelRun();
     return 0;
 }

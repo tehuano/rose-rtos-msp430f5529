@@ -10,59 +10,24 @@
 #include "Kernel.h"
 #include "Task_Cfg.h"
 
-unsigned char KernelInitilized;
+static unsigned char kernel_initilized = 0x00;
+unsigned long int sys_tick = 0;
 
-/**********************************************************************************************************************
- *  KernelRun()
- *********************************************************************************************************************/
-/*! \brief         Initialize the seed
- *  \details       This function generates the internal seed state using the provided entropy source.
- *                 Furthermore, this function can be used to update the seed state with new entropy
- *  \param[in]     cryptoKeyId             Holds the identifier of the key for which a new seed shall be generated.
- *  \param[in]     entropyPtr              Holds a pointer to the memory location which contains the
- *                                         data to feed the entropy.
- *  \param[in]     entropyLength           Contains the length of the entropy in bytes.
- *  \return        E_OK                    Request successful.
- *                 E_NOT_OK                Request failed.
- *                 CRYPTO_E_BUSY           Request failed, Crypto Driver Object is busy.
- *                 CRYPTO_E_SMALL_BUFFER   Request failed, the provided buffer is too small to store the result.
- *  \pre           -
- *  \context       TASK
- *  \reentrant     TRUE
- *  \synchronous   TRUE
- *  \diagram       KernelRun.png
- *********************************************************************************************************************/
-void KernelRun() {
-    unsigned char id = 0;
-    /* Run all the tasks in this part, not scheduling implemented yet*/
-    for (;;) {
-        Tasks[id++].pTask();
-        if ((NUMBER_OF_TASKS -1) == id) {
-            id = 0;
-        }
-    }
+void KernelInit() {
+    WDTCTL = WDTPW | WDTHOLD;   /* stop watchdog timer */
+    HardwareInitIO();           /* Initialize io */
+    HardwareInitTimerA2();      /* Initialize the timer module */
+    kernel_initilized = 0x01;
 }
 
-/**********************************************************************************************************************
- *  KernelCallBack()
- *********************************************************************************************************************/
-/*! \brief         Initialize the seed
- *  \details       This function generates the internal seed state using the provided entropy source.
- *                 Furthermore, this function can be used to update the seed state with new entropy
- *  \param[in]     cryptoKeyId             Holds the identifier of the key for which a new seed shall be generated.
- *  \param[in]     entropyPtr              Holds a pointer to the memory location which contains the
- *                                         data to feed the entropy.
- *  \param[in]     entropyLength           Contains the length of the entropy in bytes.
- *  \return        E_OK                    Request successful.
- *                 E_NOT_OK                Request failed.
- *                 CRYPTO_E_BUSY           Request failed, Crypto Driver Object is busy.
- *                 CRYPTO_E_SMALL_BUFFER   Request failed, the provided buffer is too small to store the result.
- *  \pre           -
- *  \context       TASK
- *  \reentrant     TRUE
- *  \synchronous   TRUE
- *  \diagram       KernelCallBack.png
- *********************************************************************************************************************/
-void KernelCallBack() {
-    HardwareToggleP47();
+void KernelRun() {
+    if (kernel_initilized == 0x00) {
+        return;
+    }
+    /* Kernel init tasks */
+    Scheduler_InitTasks();
+    /* Run all the tasks in this part, not scheduling implemented yet */
+    for (;;) {
+        Scheduler_RunTasks();
+    }
 }
