@@ -104,7 +104,7 @@ void HardwareInitTimerA2() {
     TA2CTL   = TASSEL_1 | ID_0 | MC_1; // ACLK, Divider 1, Up mode
     TA2CCR0  = 32;
     TA2CCTL0 = CCIE; // Enable timer interrupts
-    __bis_SR_register(GIE); /* Enable maskable interrupts */
+    __bis_SR_register(GIE);
 }
 
 /**********************************************************************************************************************

@@ -1,11 +1,11 @@
 /** ************************************************************************************************
  *  \file       Task_Cfg.c
- *  \brief      Hardware independent part of the ECC hardware selftest (header file)
+ *  \brief      Hardware independent configurtion of the TCBs (source file)
  *  \date       2019-07-01
  *  \revision   $Revision: 1.0 $
  *  \author     Rommel García-Hernández
  *  \copyright  Guenda Tecnología de México
- *  Implements the hardware independent part of the the ECC selftest for all processor platforms.
+ *  Implements Hardware independent configurtion of the TCBs (source file).
  */
 
 #include <msp430.h>

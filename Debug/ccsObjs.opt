@@ -1,1 +1,1 @@
-"./src/Hardware.obj" "./src/Kernel.obj" "./src/Scheduler.obj" "./src/Task_Cfg.obj" "./src/Tasks.obj" "./src/main.obj" "./src/sha2.obj" "../lnk_msp430f5529.cmd" -llibmath.a -llibc.a 
+"./src/Hardware.obj" "./src/Kernel.obj" "./src/Scheduler.obj" "./src/Task_Cfg.obj" "./src/Tasks.obj" "./src/main.obj" "../lnk_msp430f5529.cmd" -llibmath.a -llibc.a 

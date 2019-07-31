@@ -9,12 +9,24 @@
  */
 
 #include <msp430.h>
+#include <string.h>
+#include <stdio.h>
 #include "Hardware.h"
 #include "Tasks.h"
-#include "sha2.h"
 
-int sha256_example(uint32_t * hash);
+#define MCU_CLOCK           1000000
+#define PWM_FREQUENCY       46      // In Hertz, ideally 50Hz.
+#define SERVO_STEPS         180     // Maximum amount of steps in degrees (180 is common)
+#define SERVO_MIN           650     // The minimum duty cycle for this servo
+#define SERVO_MAX           2700    // The maximum duty cycle
+#define SERVO_VAL           (90.0/255.0)
+#define RAMP_PWM_PERIOD     511
 
+unsigned int PWM_Period     = (MCU_CLOCK / PWM_FREQUENCY);  // PWM Period
+unsigned int PWM_Duty       = 0;
+
+unsigned int servo_lut[ SERVO_STEPS+1];
+static unsigned char ram_buffer[128] = {0};
 static unsigned char rbit = 0x00;
 static unsigned long long int rbit_last_move = 0;
 static unsigned char vdigital = 0x00;
@@ -22,6 +34,11 @@ static unsigned char p1_0_state = FALSE;
 static unsigned char p1_0_last_state = FALSE;
 static unsigned char blinking_led_enable =  FALSE;
 static float voltage = 0.0;
+static unsigned long long int bled_last_move = 0;
+static unsigned int duty_cycle = 0;
+
+const char max_speed_message[32] = "maximum speed reached: ";
+unsigned int last_max_speed = 0;
 
 void Task_5msInit() {
 
@@ -56,22 +73,64 @@ void Task_10ms(void) {
         P3OUT &= ~NUM7;
         P3OUT |= (NUM7 & rbit);
     }
+    if (RBIT_DELAY <= (sys_tick - bled_last_move)) {
+        bled_last_move = sys_tick;
+        if (TRUE == blinking_led_enable) {
+            P4OUT ^= BIT7 ;
+        }
+    }
 }
 
 void Task_20msInit() {
-
+    /* ACLK = 32kHz */
+    duty_cycle = 0;
+    P2DIR |= BIT0;                            // P2.0
+    P2SEL |= BIT0;                            // P2.0 options select
+    TA1CCR0  = RAMP_PWM_PERIOD;                           // PWM Period
+    TA1CCTL1 = OUTMOD_7;                      // CCR1 reset/set
+    TA1CCR1  =  0;                            // CCR1 PWM duty cycle
+    TA1CTL   = TASSEL_1 + MC_1 + TACLR;       // ACLK, up mode, clear TAR
 }
 
 void Task_20ms(void) {
-
+    TA1CCR1 = duty_cycle;       // Set next duty cycle value
+    duty_cycle += 5;               // Add Offset to CCR0
+    // If counter is at the end of the array
+    if (duty_cycle >= RAMP_PWM_PERIOD) {
+        duty_cycle = 0; // Reset counter
+    }
 }
 
 void Task_40msInit() {
+    unsigned int servo_stepval, servo_stepnow;
+        unsigned int i;
 
+        // Calculate the step value and define the current step, defaults to minimum.
+        servo_stepval   = ( (SERVO_MAX - SERVO_MIN) / SERVO_STEPS );
+        servo_stepnow   = SERVO_MIN;
+
+        // Fill up the LUT
+        for (i = 0; i<SERVO_STEPS; i++) {
+            servo_stepnow += servo_stepval;
+            servo_lut[i] = servo_stepnow;
+        }
+
+        // Setup the PWM, etc.
+        TA0CCTL1 = OUTMOD_7;            // TACCR1 reset/set
+        TA0CTL   = TASSEL_2 + MC_1;     // SMCLK, upmode
+        TA0CCR0  = PWM_Period-1;        // PWM Period
+        TA0CCR1  = servo_lut[45];                   // TACCR1 PWM Duty Cycle
+        P1DIR   |= BIT2;                // P1.2 = output
+        P1SEL   |= BIT2;                // P1.2 = TA1 output
 }
 
 void Task_40ms(void) {
-
+    TA0CCR1 = servo_lut[45 + (unsigned int)(vdigital * SERVO_VAL)];
+    __delay_cycles(10);
+    if (vdigital >= MAX_SPEED && last_max_speed < vdigital) {
+        last_max_speed = vdigital;
+        write_log(LOG_MAX_SPEED, (void *)&last_max_speed);
+    }
 }
 
 void Task_80msInit() {
@@ -79,41 +138,25 @@ void Task_80msInit() {
 }
 
 void Task_80ms(void) {
-    uint32_t hash[8];
-    sha256_example(&hash[0]);
+    write_SegC();
 }
 
-int sha256_example(uint32_t * hash){
-  //  Input: 0xbd (1 byte)
-  //  Expected Result: 68325720 aabd7c82 f30f554b 313d0570 c95accbb 7dc4b5aa e11204c0 8ffe732b
-  int i;
-  // Space must be reserved for 64 bytes
-  uint32_t message[16];
-  uint32_t expected[8];
-  const uint32_t bytes_to_be_hashed = 1;
-  short hash_mode;
-
-  // expected
-  expected[0] = 0x68325720;
-  expected[1] = 0xaabd7c82;
-  expected[2] = 0xf30f554b;
-  expected[3] = 0x313d0570;
-  expected[4] = 0xc95accbb;
-  expected[5] = 0x7dc4b5aa;
-  expected[6] = 0xe11204c0;
-  expected[7] = 0x8ffe732b;
-  // MSB contains message
-  message[0]=0xbd000000;
-
-  hash_mode = SHA_256;
-
-  SHA_2( &message[0], bytes_to_be_hashed, hash, hash_mode);
-  for (i=0;i<8;i++)
-  {
-    if (hash[i] != expected[i])
-        return(-1);
+void write_SegC() {
+  unsigned int i;
+  char * Flash_ptr;                         // Initialize Flash pointer
+  Flash_ptr = (char *) 0x1880;
+  if (event_vector & FLASH_WRITE_EVENT) {
+      FCTL3 = FWKEY;                            // Clear Lock bit
+      FCTL1 = FWKEY+ERASE;                      // Set Erase bit
+      *Flash_ptr = 0;                           // Dummy write to erase Flash seg
+      FCTL1 = FWKEY+WRT;                        // Set WRT bit for write operation
+      for (i = 0; i < 128; i++) {
+          Flash_ptr[i] = ram_buffer[i];                   // Write value to flash
+      }
+      FCTL1 = FWKEY;                            // Clear WRT bit
+      FCTL3 = FWKEY+LOCK;                       // Set LOCK bit
+      event_vector &= ~FLASH_WRITE_EVENT;
   }
-  return(0);
 }
 
 void Task_Aperiodic_ADCInit() {
@@ -153,3 +196,15 @@ void Task_PeriodicServer6ms() {
     Task_Aperiodic_ADC();
     Task_Aperiodic_Button();
 }
+
+void write_log(unsigned char id, void *value) {
+    if (LOG_MAX_SPEED == id) {
+        char msg[16];
+        unsigned int ln = strlen(max_speed_message);
+        memcpy(&ram_buffer[LOG_MAX_SPEED], max_speed_message, ln);
+        sprintf(msg, "%d", *((unsigned int *)value));
+        memcpy(&ram_buffer[LOG_MAX_SPEED + ln], msg, strlen(msg));
+        event_vector |= FLASH_WRITE_EVENT;
+    }
+}
+

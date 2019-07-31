@@ -8,11 +8,17 @@
 #ifndef INCLUDE_SCHEDULER_H_
 #define INCLUDE_SCHEDULER_H_
 
+#define STD_ON 0x01
+#define STD_OFF 0x00
+#define PREEMTIVE STD_ON
+
 /* Task states */
 typedef enum {
     BLOCKED,
     READY,
-    RUNNING
+    RUNNING,
+    ENABLED,
+    DISABLED
 } TaskState;
 
 /* Task Control Block (TCB) */
