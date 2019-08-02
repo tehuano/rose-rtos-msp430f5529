@@ -12,7 +12,6 @@
  */
 
 #include <msp430.h>
-#include "Kernel.h"
 #include "Hardware.h"
 
 /** **********************************************************************************************
@@ -107,26 +106,6 @@ void HardwareInitTimerA2() {
     __bis_SR_register(GIE);
 }
 
-/**********************************************************************************************************************
- *  HardwareGetTick()
- *********************************************************************************************************************/
-/*! \brief         Initialize the seed
- *  \details       This function generates the internal seed state using the provided entropy source.
- *                 Furthermore, this function can be used to update the seed state with new entropy
- *  \param[in]     cryptoKeyId             Holds the identifier of the key for which a new seed shall be generated.
- *  \param[in]     entropyPtr              Holds a pointer to the memory location which contains the
- *                                         data to feed the entropy.
- *  \param[in]     entropyLength           Contains the length of the entropy in bytes.
- *  \return        E_OK                    Request successful.
- *                 E_NOT_OK                Request failed.
- *                 CRYPTO_E_BUSY           Request failed, Crypto Driver Object is busy.
- *                 CRYPTO_E_SMALL_BUFFER   Request failed, the provided buffer is too small to store the result.
- *  \pre           -
- *  \context       TASK
- *  \reentrant     TRUE
- *  \synchronous   TRUE
- *  \diagram       HardwareGetTick.png
- *********************************************************************************************************************/
 unsigned long long int HardwareGetTick() {
     return hardware_tick;
 }
@@ -134,12 +113,31 @@ unsigned long long int HardwareGetTick() {
 /* Timer A2 interrupt service routine */
 #pragma vector=TIMER2_A0_VECTOR
 __interrupt void Timer_A2 (void) {
-    //hardware_tick++;
     if(leap_cnt < NUM_OF_INTERRUPTS_ERROR) {
         hardware_tick++;
         leap_cnt++;
     } else {
-        hardware_tick += 2; /* Add an extra count to catch up */
+        /* Add an extra count to catch up */
+        hardware_tick += 2;
         leap_cnt = 0;
     }
+}
+
+void start_output_pin(pin_t pin) {
+    *(pin.pin_dir) |= pin.pin_bit; /* sets the bit as output */
+    *(pin.pin_out) &= ~pin.pin_bit; /* starts to 0 */
+}
+
+void rising_edge_pin(pin_t pin) {
+    *(pin.pin_out) |= pin.pin_bit;
+}
+
+void falling_edge_pin(pin_t pin) {
+    *(pin.pin_out) &= ~pin.pin_bit;
+}
+
+void low_pulse_pin(pin_t pin) {
+    *(pin.pin_out) &= ~pin.pin_bit;
+    __delay_cycles(10);
+    *(pin.pin_out) |= pin.pin_bit;
 }

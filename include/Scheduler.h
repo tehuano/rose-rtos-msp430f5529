@@ -8,6 +8,9 @@
 #ifndef INCLUDE_SCHEDULER_H_
 #define INCLUDE_SCHEDULER_H_
 
+#include "Hardware.h"
+#include "list.h"
+
 #define STD_ON 0x01
 #define STD_OFF 0x00
 #define PREEMTIVE STD_ON
@@ -24,15 +27,16 @@ typedef enum {
 /* Task Control Block (TCB) */
 typedef struct {
     /* Task Control Data */
-    unsigned int id;         /* Task identifier          */
+    unsigned int id;         /* Task identifier */
     void (* pTask)(void);    /* Pointer to the task code */
     void (* pInit)(void);    /* Pointer to the init code */
-    unsigned int period;     /* Task Period              */
-    unsigned long long int last_tick;  /* Last tick task was ran   */
-    unsigned int priority;   /* Task Priority            */
+    unsigned int period;     /* Task Period */
+    unsigned long long int last_tick; /* Last tick task was ran   */
+    unsigned int priority;   /* Task Priority */
     TaskState state;         /* ready, running, blocked  */
+    pin_t led;               /* blinks a led according to the state */
     /* Task Context Data */
-    void *sp;                /* stack pointer            */
+    void *sp;                /* stack pointer */
 } TaskControlBlock_t;
 
 /**********************************************************************************************************************
@@ -80,5 +84,41 @@ void Scheduler_InitTasks(void);
  *  \enduml
  *********************************************************************************************************************/
 void Scheduler_RunTasks(void);
+
+/**********************************************************************************************************************
+ *  task_state_transition()
+ *********************************************************************************************************************/
+/*! \brief         Initialize the Tasks
+ *  \details       This function generates the internal seed state using the provided entropy source.
+ *                 Furthermore, this function can be used to update the seed state with new entropy
+ *  \param[in]     task             Holds the identifier of the key for which a new seed shall be generated.
+ *  \param[in]     new_state              Holds a pointer to the memory location which contains the
+ *                                         data to feed the entropy.
+ *  \pre           nothing
+ *
+ *  \startuml
+ *    Sender->Receiver  : Command()
+ *    Sender<--Receiver : Ack()
+ *  \enduml
+ *********************************************************************************************************************/
+void task_state_transition(TaskControlBlock_t *task, TaskState new_state);
+
+/**********************************************************************************************************************
+ *  update_ready_list()
+ *********************************************************************************************************************/
+/*! \brief         Initialize the Tasks
+ *  \details       This function generates the internal seed state using the provided entropy source.
+ *                 Furthermore, this function can be used to update the seed state with new entropy
+ *  \param[in]     task             Holds the identifier of the key for which a new seed shall be generated.
+ *  \param[in]     new_state              Holds a pointer to the memory location which contains the
+ *                                         data to feed the entropy.
+ *  \pre           nothing
+ *
+ *  \startuml
+ *    Sender->Receiver  : Command()
+ *    Sender<--Receiver : Ack()
+ *  \enduml
+ *********************************************************************************************************************/
+void update_ready_list();
 
 #endif /* INCLUDE_SCHEDULER_H_ */

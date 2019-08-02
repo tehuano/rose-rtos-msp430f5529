@@ -1,14 +1,11 @@
 /** ************************************************************************************************
  *  \file       main.c
- *
  *  \brief      Implements the core logic of the rtos
- *
- *  \date       2015-08-03
- *  \revision   $Revision: 1.5 $
- *  \author     Andreas Menge (uidg4118)
- *  \copyright  Continental Automotive 2015
- *
- *  Implements the hardware independent part of the the ECC selftest for all processor platforms.
+ *  \date       2019-07-01
+ *  \revision   $Revision: 1.0$
+ *  \author     Rommel García Hernández
+ *  \copyright  Guenda Tecnología de México
+ *  Implements the core logic of the RTOS. This program calls the functions from kernel directly.
  */
 
 #include "Kernel.h"
@@ -44,7 +41,7 @@
  * - Task_40ms()
  *   - Controlar un servomotor dependiendo de un valor de entrada de ADC. (0 cuentas de ADC significa 45°, 255 cuentas de ADC significa 135°)
  * - Task_80ms()
- *   - Implementación Libre
+ *   - Log de máxima velocidad en la ejecución
  *
  * - Tarea de Botón presionado/liberado
  *   - Cambio de estado de un LED.

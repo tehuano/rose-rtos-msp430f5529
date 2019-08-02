@@ -17,5 +17,7 @@
 #define FLASH_WRITE_EVENT 0b0000000000100000
 
 extern TaskControlBlock_t Tasks[NUMBER_OF_TASKS];
+extern node_t tasks_ids[NUMBER_OF_TASKS];
+extern list_t ready_list;
 
 #endif /* INCLUDE_TASK_CFG_H_ */

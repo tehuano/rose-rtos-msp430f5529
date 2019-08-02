@@ -15,6 +15,7 @@ ORDERED_OBJS += \
 "./src/Scheduler.obj" \
 "./src/Task_Cfg.obj" \
 "./src/Tasks.obj" \
+"./src/list.obj" \
 "./src/main.obj" \
 "../lnk_msp430f5529.cmd" \
 $(GEN_CMDS__FLAG) \
@@ -162,8 +163,8 @@ rose-rtos-msp430f5529.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "src\Hardware.obj" "src\Kernel.obj" "src\Scheduler.obj" "src\Task_Cfg.obj" "src\Tasks.obj" "src\main.obj" 
-	-$(RM) "src\Hardware.d" "src\Kernel.d" "src\Scheduler.d" "src\Task_Cfg.d" "src\Tasks.d" "src\main.d" 
+	-$(RM) "src\Hardware.obj" "src\Kernel.obj" "src\Scheduler.obj" "src\Task_Cfg.obj" "src\Tasks.obj" "src\list.obj" "src\main.obj" 
+	-$(RM) "src\Hardware.d" "src\Kernel.d" "src\Scheduler.d" "src\Task_Cfg.d" "src\Tasks.d" "src\list.d" "src\main.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

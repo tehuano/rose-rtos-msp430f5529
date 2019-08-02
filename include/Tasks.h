@@ -297,6 +297,36 @@ void Task_PeriodicServer6ms();
  *********************************************************************************************************************/
 void write_SegC();
 
+/**********************************************************************************************************************
+ *  write_log(unsigned char id, void *value)
+ *********************************************************************************************************************/
+/*! \brief         Conversiones de ADC con filtrado a 8 bits. Detecciónn de estados del botón.
+ *  \details       This function generates  Conversiones de ADC con filtrado a 8 bits. Detecciónn de estados del botón.
+ *  \param[in]     void
+ *  \return        void
+ *  \pre           nothing
+ *
+ *  \startuml
+ *    Sender->Receiver  : Command()
+ *    Sender<--Receiver : Ack()
+ *  \enduml
+ *********************************************************************************************************************/
 void write_log(unsigned char id, void *value);
+
+/**********************************************************************************************************************
+ *  evaluate_button()
+ *********************************************************************************************************************/
+/*! \brief         Conversiones de ADC con filtrado a 8 bits. Detecciónn de estados del botón.
+ *  \details       This function generates  Conversiones de ADC con filtrado a 8 bits. Detecciónn de estados del botón.
+ *  \param[in]     void
+ *  \return        void
+ *  \pre           nothing
+ *
+ *  \startuml
+ *    Sender->Receiver  : Command()
+ *    Sender<--Receiver : Ack()
+ *  \enduml
+ *********************************************************************************************************************/
+void evaluate_button();
 
 #endif /* INCLUDE_TASKS_H_ */
