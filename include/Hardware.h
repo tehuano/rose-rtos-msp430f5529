@@ -3,8 +3,8 @@
  *
  *  \brief      Hardware independent part of rtos TBD
  *
- *  \date       2015-08-03
- *  \revision   $Revision: 1.5 $
+ *  \date       2019-07-01
+ *  \revision   $Revision: 1.0$
  *  \author     Rommel García-Hernández
  *  \copyright  Guenda Tecnología de México
  *
@@ -45,17 +45,16 @@ typedef struct {
 /**********************************************************************************************************************
  *  HardwareInitIO()
  *********************************************************************************************************************/
-/*! \brief         Initialize the seed
+/*! \brief         TBD
  *  \details       TBD
 
- *  \param[in]     cryptoKeyId             Holds the identifier of the key for which a new seed shall be generated.
- *  \param[in]     entropyPtr              Holds a pointer to the memory location which contains the
- *                                         data to feed the entropy.
- *  \param[in]     entropyLength           Contains the length of the entropy in bytes.
- *  \return        E_OK                    Request successful.
- *                 E_NOT_OK                Request failed.
- *                 CRYPTO_E_BUSY           Request failed, Crypto Driver Object is busy.
- *                 CRYPTO_E_SMALL_BUFFER   Request failed, the provided buffer is too small to store the result.
+ *  \param[in]     TBD                       TBD
+
+
+
+ *  \return        TBD
+
+
  *  \pre           -
  *  \context       TASK
  *  \reentrant     TRUE
@@ -67,17 +66,16 @@ void HardwareInitIO();
 /**********************************************************************************************************************
  *  HardwareToggleP47()
  *********************************************************************************************************************/
-/*! \brief         Initialize the seed
+/*! \brief         TBD
  *  \details       TBD
 
- *  \param[in]     cryptoKeyId             Holds the identifier of the key for which a new seed shall be generated.
- *  \param[in]     entropyPtr              Holds a pointer to the memory location which contains the
- *                                         data to feed the entropy.
- *  \param[in]     entropyLength           Contains the length of the entropy in bytes.
- *  \return        E_OK                    Request successful.
- *                 E_NOT_OK                Request failed.
- *                 CRYPTO_E_BUSY           Request failed, Crypto Driver Object is busy.
- *                 CRYPTO_E_SMALL_BUFFER   Request failed, the provided buffer is too small to store the result.
+ *  \param[in]     TBD                       TBD
+
+
+
+ *  \return        TBD
+
+
  *  \pre           -
  *  \context       TASK
  *  \reentrant     TRUE
@@ -89,17 +87,16 @@ void HardwareToggleP47();
 /**********************************************************************************************************************
  *  HardwareInitTimerA2()
  *********************************************************************************************************************/
-/*! \brief         Initialize the seed
+/*! \brief         TBD
  *  \details       TBD
 
- *  \param[in]     cryptoKeyId             Holds the identifier of the key for which a new seed shall be generated.
- *  \param[in]     entropyPtr              Holds a pointer to the memory location which contains the
- *                                         data to feed the entropy.
- *  \param[in]     entropyLength           Contains the length of the entropy in bytes.
- *  \return        E_OK                    Request successful.
- *                 E_NOT_OK                Request failed.
- *                 CRYPTO_E_BUSY           Request failed, Crypto Driver Object is busy.
- *                 CRYPTO_E_SMALL_BUFFER   Request failed, the provided buffer is too small to store the result.
+ *  \param[in]     TBD                       TBD
+
+
+
+ *  \return        TBD
+
+
  *  \pre           -
  *  \context       TASK
  *  \reentrant     TRUE
@@ -111,17 +108,16 @@ void HardwareInitTimerA2();
 /**********************************************************************************************************************
  *  HardwareGetTick()
  *********************************************************************************************************************/
-/*! \brief         Initialize the seed
+/*! \brief         TBD
  *  \details       TBD
 
- *  \param[in]     cryptoKeyId             Holds the identifier of the key for which a new seed shall be generated.
- *  \param[in]     entropyPtr              Holds a pointer to the memory location which contains the
- *                                         data to feed the entropy.
- *  \param[in]     entropyLength           Contains the length of the entropy in bytes.
- *  \return        E_OK                    Request successful.
- *                 E_NOT_OK                Request failed.
- *                 CRYPTO_E_BUSY           Request failed, Crypto Driver Object is busy.
- *                 CRYPTO_E_SMALL_BUFFER   Request failed, the provided buffer is too small to store the result.
+ *  \param[in]     TBD                       TBD
+
+
+
+ *  \return        TBD
+
+
  *  \pre           -
  *  \context       TASK
  *  \reentrant     TRUE
@@ -133,17 +129,16 @@ unsigned long long int HardwareGetTick();
 /**********************************************************************************************************************
  *  start_output_pin()
  *********************************************************************************************************************/
-/*! \brief         Initialize the seed
+/*! \brief         TBD
  *  \details       TBD
 
- *  \param[in]     cryptoKeyId             Holds the identifier of the key for which a new seed shall be generated.
- *  \param[in]     entropyPtr              Holds a pointer to the memory location which contains the
- *                                         data to feed the entropy.
- *  \param[in]     entropyLength           Contains the length of the entropy in bytes.
- *  \return        E_OK                    Request successful.
- *                 E_NOT_OK                Request failed.
- *                 CRYPTO_E_BUSY           Request failed, Crypto Driver Object is busy.
- *                 CRYPTO_E_SMALL_BUFFER   Request failed, the provided buffer is too small to store the result.
+ *  \param[in]     TBD                       TBD
+
+
+
+ *  \return        TBD
+
+
  *  \pre           -
  *  \context       TASK
  *  \reentrant     TRUE
@@ -156,17 +151,16 @@ void start_output_pin(pin_t pin);
 /**********************************************************************************************************************
  *  HardwareGetTick()
  *********************************************************************************************************************/
-/*! \brief         Initialize the seed
+/*! \brief         TBD
  *  \details       TBD
 
- *  \param[in]     cryptoKeyId             Holds the identifier of the key for which a new seed shall be generated.
- *  \param[in]     entropyPtr              Holds a pointer to the memory location which contains the
- *                                         data to feed the entropy.
- *  \param[in]     entropyLength           Contains the length of the entropy in bytes.
- *  \return        E_OK                    Request successful.
- *                 E_NOT_OK                Request failed.
- *                 CRYPTO_E_BUSY           Request failed, Crypto Driver Object is busy.
- *                 CRYPTO_E_SMALL_BUFFER   Request failed, the provided buffer is too small to store the result.
+ *  \param[in]     TBD                       TBD
+
+
+
+ *  \return        TBD
+
+
  *  \pre           -
  *  \context       TASK
  *  \reentrant     TRUE
@@ -178,17 +172,16 @@ void rising_edge_pin(pin_t pin);
 /**********************************************************************************************************************
  *  falling_edge_pin()
  *********************************************************************************************************************/
-/*! \brief         Initialize the seed
+/*! \brief         TBD
  *  \details       TBD
 
- *  \param[in]     cryptoKeyId             Holds the identifier of the key for which a new seed shall be generated.
- *  \param[in]     entropyPtr              Holds a pointer to the memory location which contains the
- *                                         data to feed the entropy.
- *  \param[in]     entropyLength           Contains the length of the entropy in bytes.
- *  \return        E_OK                    Request successful.
- *                 E_NOT_OK                Request failed.
- *                 CRYPTO_E_BUSY           Request failed, Crypto Driver Object is busy.
- *                 CRYPTO_E_SMALL_BUFFER   Request failed, the provided buffer is too small to store the result.
+ *  \param[in]     TBD                       TBD
+
+
+
+ *  \return        TBD
+
+
  *  \pre           -
  *  \context       TASK
  *  \reentrant     TRUE
@@ -200,17 +193,16 @@ void falling_edge_pin(pin_t pin);
 /**********************************************************************************************************************
  *  low_pulse_pin()
  *********************************************************************************************************************/
-/*! \brief         Initialize the seed
+/*! \brief         TBD
  *  \details       TBD
 
- *  \param[in]     cryptoKeyId             Holds the identifier of the key for which a new seed shall be generated.
- *  \param[in]     entropyPtr              Holds a pointer to the memory location which contains the
- *                                         data to feed the entropy.
- *  \param[in]     entropyLength           Contains the length of the entropy in bytes.
- *  \return        E_OK                    Request successful.
- *                 E_NOT_OK                Request failed.
- *                 CRYPTO_E_BUSY           Request failed, Crypto Driver Object is busy.
- *                 CRYPTO_E_SMALL_BUFFER   Request failed, the provided buffer is too small to store the result.
+ *  \param[in]     TBD                       TBD
+
+
+
+ *  \return        TBD
+
+
  *  \pre           -
  *  \context       TASK
  *  \reentrant     TRUE

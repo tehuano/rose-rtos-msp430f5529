@@ -45,14 +45,13 @@ typedef struct {
 /*! \brief         Initialize the Tasks
  *  \details       TBD
 
- *  \param[in]     cryptoKeyId             Holds the identifier of the key for which a new seed shall be generated.
- *  \param[in]     entropyPtr              Holds a pointer to the memory location which contains the
- *                                         data to feed the entropy.
- *  \param[in]     entropyLength           Contains the length of the entropy in bytes.
- *  \return        E_OK                    Request successful.
- *                 E_NOT_OK                Request failed.
- *                 CRYPTO_E_BUSY           Request failed, Crypto Driver Object is busy.
- *                 CRYPTO_E_SMALL_BUFFER   Request failed, the provided buffer is too small to store the result.
+ *  \param[in]     TBD                       TBD
+
+
+
+ *  \return        TBD
+
+
  *  \pre           nothing
  *
  *  \startuml
@@ -68,14 +67,13 @@ void Scheduler_InitTasks(void);
 /*! \brief         Initialize the Tasks
  *  \details       TBD
 
- *  \param[in]     cryptoKeyId             Holds the identifier of the key for which a new seed shall be generated.
- *  \param[in]     entropyPtr              Holds a pointer to the memory location which contains the
- *                                         data to feed the entropy.
- *  \param[in]     entropyLength           Contains the length of the entropy in bytes.
- *  \return        E_OK                    Request successful.
- *                 E_NOT_OK                Request failed.
- *                 CRYPTO_E_BUSY           Request failed, Crypto Driver Object is busy.
- *                 CRYPTO_E_SMALL_BUFFER   Request failed, the provided buffer is too small to store the result.
+ *  \param[in]     TBD                       TBD
+
+
+
+ *  \return        TBD
+
+
  *  \pre           nothing
  *
  *  \startuml
@@ -93,7 +91,7 @@ void Scheduler_RunTasks(void);
 
  *  \param[in]     task             Holds the identifier of the key for which a new seed shall be generated.
  *  \param[in]     new_state              Holds a pointer to the memory location which contains the
- *                                         data to feed the entropy.
+
  *  \pre           nothing
  *
  *  \startuml
@@ -111,7 +109,7 @@ void task_state_transition(TaskControlBlock_t *task, TaskState new_state);
 
  *  \param[in]     task             Holds the identifier of the key for which a new seed shall be generated.
  *  \param[in]     new_state              Holds a pointer to the memory location which contains the
- *                                         data to feed the entropy.
+
  *  \pre           nothing
  *
  *  \startuml
