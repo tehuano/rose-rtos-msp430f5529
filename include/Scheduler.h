@@ -43,8 +43,8 @@ typedef struct {
  *  Scheduler_InitTasks()
  *********************************************************************************************************************/
 /*! \brief         Initialize the Tasks
- *  \details       This function generates the internal seed state using the provided entropy source.
- *                 Furthermore, this function can be used to update the seed state with new entropy
+ *  \details       TBD
+
  *  \param[in]     cryptoKeyId             Holds the identifier of the key for which a new seed shall be generated.
  *  \param[in]     entropyPtr              Holds a pointer to the memory location which contains the
  *                                         data to feed the entropy.
@@ -66,8 +66,8 @@ void Scheduler_InitTasks(void);
  *  Scheduler_RunTasks()
  *********************************************************************************************************************/
 /*! \brief         Initialize the Tasks
- *  \details       This function generates the internal seed state using the provided entropy source.
- *                 Furthermore, this function can be used to update the seed state with new entropy
+ *  \details       TBD
+
  *  \param[in]     cryptoKeyId             Holds the identifier of the key for which a new seed shall be generated.
  *  \param[in]     entropyPtr              Holds a pointer to the memory location which contains the
  *                                         data to feed the entropy.
@@ -89,8 +89,8 @@ void Scheduler_RunTasks(void);
  *  task_state_transition()
  *********************************************************************************************************************/
 /*! \brief         Initialize the Tasks
- *  \details       This function generates the internal seed state using the provided entropy source.
- *                 Furthermore, this function can be used to update the seed state with new entropy
+ *  \details       TBD
+
  *  \param[in]     task             Holds the identifier of the key for which a new seed shall be generated.
  *  \param[in]     new_state              Holds a pointer to the memory location which contains the
  *                                         data to feed the entropy.
@@ -107,8 +107,8 @@ void task_state_transition(TaskControlBlock_t *task, TaskState new_state);
  *  update_ready_list()
  *********************************************************************************************************************/
 /*! \brief         Initialize the Tasks
- *  \details       This function generates the internal seed state using the provided entropy source.
- *                 Furthermore, this function can be used to update the seed state with new entropy
+ *  \details       TBD
+
  *  \param[in]     task             Holds the identifier of the key for which a new seed shall be generated.
  *  \param[in]     new_state              Holds a pointer to the memory location which contains the
  *                                         data to feed the entropy.

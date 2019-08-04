@@ -48,8 +48,8 @@ extern unsigned int event_vector;
  *  KernelInit()
  *********************************************************************************************************************/
 /*! \brief         Initialize the seed
- *  \details       This function generates the internal seed state using the provided entropy source.
- *                 Furthermore, this function can be used to update the seed state with new entropy
+ *  \details       TBD
+
  *  \param[in]     cryptoKeyId             Holds the identifier of the key for which a new seed shall be generated.
  *  \param[in]     entropyPtr              Holds a pointer to the memory location which contains the
  *                                         data to feed the entropy.
@@ -72,8 +72,8 @@ void KernelInit(void);
  *  KernelRun()
  *********************************************************************************************************************/
 /*! \brief         Initialize the seed
- *  \details       This function generates the internal seed state using the provided entropy source.
- *                 Furthermore, this function can be used to update the seed state with new entropy
+ *  \details       TBD
+
  *  \param[in]     cryptoKeyId             Holds the identifier of the key for which a new seed shall be generated.
  *  \param[in]     entropyPtr              Holds a pointer to the memory location which contains the
  *                                         data to feed the entropy.

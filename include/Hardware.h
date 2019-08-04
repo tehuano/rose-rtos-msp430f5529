@@ -46,8 +46,8 @@ typedef struct {
  *  HardwareInitIO()
  *********************************************************************************************************************/
 /*! \brief         Initialize the seed
- *  \details       This function generates the internal seed state using the provided entropy source.
- *                 Furthermore, this function can be used to update the seed state with new entropy
+ *  \details       TBD
+
  *  \param[in]     cryptoKeyId             Holds the identifier of the key for which a new seed shall be generated.
  *  \param[in]     entropyPtr              Holds a pointer to the memory location which contains the
  *                                         data to feed the entropy.
@@ -68,8 +68,8 @@ void HardwareInitIO();
  *  HardwareToggleP47()
  *********************************************************************************************************************/
 /*! \brief         Initialize the seed
- *  \details       This function generates the internal seed state using the provided entropy source.
- *                 Furthermore, this function can be used to update the seed state with new entropy
+ *  \details       TBD
+
  *  \param[in]     cryptoKeyId             Holds the identifier of the key for which a new seed shall be generated.
  *  \param[in]     entropyPtr              Holds a pointer to the memory location which contains the
  *                                         data to feed the entropy.
@@ -90,8 +90,8 @@ void HardwareToggleP47();
  *  HardwareInitTimerA2()
  *********************************************************************************************************************/
 /*! \brief         Initialize the seed
- *  \details       This function generates the internal seed state using the provided entropy source.
- *                 Furthermore, this function can be used to update the seed state with new entropy
+ *  \details       TBD
+
  *  \param[in]     cryptoKeyId             Holds the identifier of the key for which a new seed shall be generated.
  *  \param[in]     entropyPtr              Holds a pointer to the memory location which contains the
  *                                         data to feed the entropy.
@@ -112,8 +112,8 @@ void HardwareInitTimerA2();
  *  HardwareGetTick()
  *********************************************************************************************************************/
 /*! \brief         Initialize the seed
- *  \details       This function generates the internal seed state using the provided entropy source.
- *                 Furthermore, this function can be used to update the seed state with new entropy
+ *  \details       TBD
+
  *  \param[in]     cryptoKeyId             Holds the identifier of the key for which a new seed shall be generated.
  *  \param[in]     entropyPtr              Holds a pointer to the memory location which contains the
  *                                         data to feed the entropy.
@@ -134,8 +134,8 @@ unsigned long long int HardwareGetTick();
  *  start_output_pin()
  *********************************************************************************************************************/
 /*! \brief         Initialize the seed
- *  \details       This function generates the internal seed state using the provided entropy source.
- *                 Furthermore, this function can be used to update the seed state with new entropy
+ *  \details       TBD
+
  *  \param[in]     cryptoKeyId             Holds the identifier of the key for which a new seed shall be generated.
  *  \param[in]     entropyPtr              Holds a pointer to the memory location which contains the
  *                                         data to feed the entropy.
@@ -157,8 +157,8 @@ void start_output_pin(pin_t pin);
  *  HardwareGetTick()
  *********************************************************************************************************************/
 /*! \brief         Initialize the seed
- *  \details       This function generates the internal seed state using the provided entropy source.
- *                 Furthermore, this function can be used to update the seed state with new entropy
+ *  \details       TBD
+
  *  \param[in]     cryptoKeyId             Holds the identifier of the key for which a new seed shall be generated.
  *  \param[in]     entropyPtr              Holds a pointer to the memory location which contains the
  *                                         data to feed the entropy.
@@ -179,8 +179,8 @@ void rising_edge_pin(pin_t pin);
  *  falling_edge_pin()
  *********************************************************************************************************************/
 /*! \brief         Initialize the seed
- *  \details       This function generates the internal seed state using the provided entropy source.
- *                 Furthermore, this function can be used to update the seed state with new entropy
+ *  \details       TBD
+
  *  \param[in]     cryptoKeyId             Holds the identifier of the key for which a new seed shall be generated.
  *  \param[in]     entropyPtr              Holds a pointer to the memory location which contains the
  *                                         data to feed the entropy.
@@ -201,8 +201,8 @@ void falling_edge_pin(pin_t pin);
  *  low_pulse_pin()
  *********************************************************************************************************************/
 /*! \brief         Initialize the seed
- *  \details       This function generates the internal seed state using the provided entropy source.
- *                 Furthermore, this function can be used to update the seed state with new entropy
+ *  \details       TBD
+
  *  \param[in]     cryptoKeyId             Holds the identifier of the key for which a new seed shall be generated.
  *  \param[in]     entropyPtr              Holds a pointer to the memory location which contains the
  *                                         data to feed the entropy.
