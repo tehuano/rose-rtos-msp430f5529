@@ -5,7 +5,7 @@
  *  \revision   $Revision: 1.0 $
  *  \author     Rommel García-Hernández
  *  \copyright  Guenda Tecnología de México
- *  Implements the hardware independent part of the the ECC selftest for all processor platforms.
+ *  Implements the hardware independent part of the rtos TBD
  */
 
 #ifndef INCLUDE_TASK_CFG_H_

@@ -1,11 +1,11 @@
 /** ************************************************************************************************
  *  \file       Kernel.h
- *  \brief      Hardware independent part of the ECC hardware selftest (header file)
+ *  \brief      Hardware independent part of rtos TBD
  *  \date       2015-08-03
  *  \revision   $Revision: 1.5 $
  *  \author     Rommel García Hernández
- *  \copyright  Continental Automotive 2015
- *  Implements the hardware independent part of the the ECC selftest for all processor platforms.
+ *  \copyright  Guenda Tecnología de México 2015
+ *  Implements the hardware independent part of the rtos TBD
  */
 
 #ifndef INCLUDE_KERNEL_H_

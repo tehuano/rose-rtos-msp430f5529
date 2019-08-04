@@ -1,14 +1,14 @@
 /** ************************************************************************************************
  *  \file       Hardware.c
  *
- *  \brief      Hardware independent part of the ECC hardware selftest (header file)
+ *  \brief      Hardware independent part of rtos TBD
  *
  *  \date       2015-08-03
  *  \revision   $Revision: 1.5 $
- *  \author     Andreas Menge (uidg4118)
- *  \copyright  Continental Automotive 2015
+ *  \author     Rommel García Hernández
+ *  \copyright  Guenda Tecnología de México 2015
  *
- *  Implements the hardware independent part of the the ECC selftest for all processor platforms.
+ *  Implements the hardware independent part of the rtos TBD
  */
 
 #include <msp430.h>
@@ -77,29 +77,13 @@ void HardwareToggleP47() {
 }
 
 /**********************************************************************************************************************
- *  HardwareInitTimerA0()
+ *  HardwareInitTimerA2()
  *********************************************************************************************************************/
-/*! \brief         Initialize the seed
- *  \details       This function generates the internal seed state using the provided entropy source.
- *                 Furthermore, this function can be used to update the seed state with new entropy
- *  \param[in]     cryptoKeyId             Holds the identifier of the key for which a new seed shall be generated.
- *  \param[in]     entropyPtr              Holds a pointer to the memory location which contains the
- *                                         data to feed the entropy.
- *  \param[in]     entropyLength           Contains the length of the entropy in bytes.
- *  \return        E_OK                    Request successful.
- *                 E_NOT_OK                Request failed.
- *                 CRYPTO_E_BUSY           Request failed, Crypto Driver Object is busy.
- *                 CRYPTO_E_SMALL_BUFFER   Request failed, the provided buffer is too small to store the result.
- *  \pre           -
- *  \context       TASK
- *  \reentrant     TRUE
- *  \synchronous   TRUE
- *  \diagram       HardwareInitTimerA0.png
+/*! \brief         Initialize the Timer A2
+ *  \details       This function generates the timer A2 state using the provided entropy source.
+ *  \pre           Disable interrupts and wdt
  *********************************************************************************************************************/
 void HardwareInitTimerA2() {
-//   TA2CTL   = TASSEL_2 + ID_0 + MC_1; /* Using SMCLK */
-//   TA2CCR0  = 104; /* 1.048576 MHz */
-//   TA2CCTL0 = CCIE; /* Enable timer interrupts */
     TA2CTL   = TASSEL_1 | ID_0 | MC_1; // ACLK, Divider 1, Up mode
     TA2CCR0  = 32;
     TA2CCTL0 = CCIE; // Enable timer interrupts

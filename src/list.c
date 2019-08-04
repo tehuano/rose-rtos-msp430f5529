@@ -1,8 +1,11 @@
-/*
- * list.c
- *
- *  Created on: 2 ago. 2019
- *      Author: Rommel
+/** ************************************************************************************************
+ *  \file       list.c
+ *  \brief      Implementation RTOS Kernel logic (source file)
+ *  \date       2019-07-01
+ *  \revision   $Revision: 1.0$
+ *  \author     Rommel García Hernández
+ *  \copyright  Guenda Tecnología de México
+ *  Implements funtionality of RTOS kernel, scheduler and hw invocations.
  */
 
 #include "list.h"
