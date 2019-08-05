@@ -1,8 +1,10 @@
-/*
- * Tasks.h
- *
- *  Created on: 14 jul. 2019
- *      Author: Rommel
+/** ************************************************************************************************
+ *  \file       Task.h
+ *  \brief      Hardware independent definition of the OS tasks (header file)
+ *  \date       2019-07-01
+ *  \revision   $Revision: 1.0 $
+ *  \author     Rommel García-Hernández
+ *  \copyright  Guenda Tecnología de México
  */
 
 #ifndef INCLUDE_TASKS_H_

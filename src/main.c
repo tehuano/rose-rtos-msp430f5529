@@ -8,8 +8,7 @@
  *  Implements the core logic of the RTOS. This program calls the functions from kernel directly.
  */
 
-#include "Kernel.h"
-#include "Scheduler.h"
+#include "main.h"
 
 /*
  * # Sistema operativo de tiempo real con las siguientes caracteristicas.
@@ -49,6 +48,9 @@
  *   - Si la cuenta de ADC es mayor a 200 un LED comienzan a parpadear
  */
 
+/**********************************************************************************************************************
+ *  main()
+ *********************************************************************************************************************/
 int main(void) {
     /* Kernel_Init */
     KernelInit();
