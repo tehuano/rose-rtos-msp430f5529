@@ -1,13 +1,10 @@
 /** ************************************************************************************************
  *  \file       Hardware.h
- *
  *  \brief      Hardware independent part of rtos TBD
- *
  *  \date       2019-07-01
  *  \revision   $Revision: 1.0$
- *  \author     Rommel García-Hernández
- *  \copyright  Guenda Tecnología de México
- *
+ *  \author     Rommel GarcÃ­a-HernÃ¡ndez
+ *  \copyright  Guenda TecnologÃ­a de MÃ©xico
  *  Implements the hardware independent part of the rtos TBD
  */
 
@@ -18,6 +15,9 @@
 #define TRUE 0x01
 #define FALSE 0x00
 
+/**
+* A structure to represent push buttons and its output
+*/
 typedef struct {
     /* input button */
     volatile unsigned char *p_in;
@@ -33,6 +33,9 @@ typedef struct {
     unsigned char counter;
 } button_t;
 
+/**
+* A structure to represent Hardware pins
+*/
 typedef struct {
     /* input button */
     volatile unsigned char *pin_in;
@@ -47,19 +50,25 @@ typedef struct {
  *********************************************************************************************************************/
 /*! \brief         TBD
  *  \details       TBD
-
  *  \param[in]     TBD                       TBD
-
-
-
  *  \return        TBD
-
-
  *  \pre           -
  *  \context       TASK
  *  \reentrant     TRUE
  *  \synchronous   TRUE
  *  \diagram       HardwareGetTick.png
+ * 
+ * @startuml
+ * (*) --> "Initialization
+ * if "Some Test" then
+ *  -->[true] "Some Activity"
+ *  --> "Another activity"
+ *  -right-> (*)
+ * else
+ * -->[false] "Something else"
+ * -->[Ending process] (*)
+ * endif
+ * @enduml
  *********************************************************************************************************************/
 void HardwareInitIO();
 
@@ -68,19 +77,24 @@ void HardwareInitIO();
  *********************************************************************************************************************/
 /*! \brief         TBD
  *  \details       TBD
-
  *  \param[in]     TBD                       TBD
-
-
-
  *  \return        TBD
-
-
  *  \pre           -
  *  \context       TASK
  *  \reentrant     TRUE
  *  \synchronous   TRUE
  *  \diagram       HardwareGetTick.png
+ * @startuml
+ * (*) --> "Initialization
+ * if "Some Test" then
+ *  -->[true] "Some Activity"
+ *  --> "Another activity"
+ *  -right-> (*)
+ * else
+ * -->[false] "Something else"
+ * -->[Ending process] (*)
+ * endif
+ * @enduml
  *********************************************************************************************************************/
 void HardwareToggleP47();
 
@@ -89,14 +103,8 @@ void HardwareToggleP47();
  *********************************************************************************************************************/
 /*! \brief         TBD
  *  \details       TBD
-
  *  \param[in]     TBD                       TBD
-
-
-
  *  \return        TBD
-
-
  *  \pre           -
  *  \context       TASK
  *  \reentrant     TRUE
@@ -110,19 +118,24 @@ void HardwareInitTimerA2();
  *********************************************************************************************************************/
 /*! \brief         TBD
  *  \details       TBD
-
  *  \param[in]     TBD                       TBD
-
-
-
  *  \return        TBD
-
-
  *  \pre           -
  *  \context       TASK
  *  \reentrant     TRUE
  *  \synchronous   TRUE
  *  \diagram       HardwareGetTick.png
+ * @startuml
+ * (*) --> "Initialization
+ * if "Some Test" then
+ *  -->[true] "Some Activity"
+ *  --> "Another activity"
+ *  -right-> (*)
+ * else
+ * -->[false] "Something else"
+ * -->[Ending process] (*)
+ * endif
+ * @enduml
  *********************************************************************************************************************/
 unsigned long long int HardwareGetTick();
 
@@ -131,19 +144,24 @@ unsigned long long int HardwareGetTick();
  *********************************************************************************************************************/
 /*! \brief         TBD
  *  \details       TBD
-
  *  \param[in]     TBD                       TBD
-
-
-
  *  \return        TBD
-
-
  *  \pre           -
  *  \context       TASK
  *  \reentrant     TRUE
  *  \synchronous   TRUE
  *  \diagram       HardwareGetTick.png
+ * @startuml
+ * (*) --> "Initialization
+ * if "Some Test" then
+ *  -->[true] "Some Activity"
+ *  --> "Another activity"
+ *  -right-> (*)
+ * else
+ * -->[false] "Something else"
+ * -->[Ending process] (*)
+ * endif
+ * @enduml
  *********************************************************************************************************************/
 void start_output_pin(pin_t pin);
 
@@ -151,21 +169,29 @@ void start_output_pin(pin_t pin);
 /**********************************************************************************************************************
  *  HardwareGetTick()
  *********************************************************************************************************************/
-/*! \brief         TBD
+/*!
+ *  \brief         TBD
  *  \details       TBD
-
  *  \param[in]     TBD                       TBD
-
-
-
  *  \return        TBD
-
-
  *  \pre           -
  *  \context       TASK
  *  \reentrant     TRUE
  *  \synchronous   TRUE
  *  \diagram       HardwareGetTick.png
+ *
+ * @startuml
+ * (*) --> "Initialization
+ * if "Some Test" then
+ *  -->[true] "Some Activity"
+ *  --> "Another activity"
+ *  -right-> (*)
+ * else
+ * -->[false] "Something else"
+ * -->[Ending process] (*)
+ * endif
+ * @enduml
+ *
  *********************************************************************************************************************/
 void rising_edge_pin(pin_t pin);
 
@@ -174,19 +200,24 @@ void rising_edge_pin(pin_t pin);
  *********************************************************************************************************************/
 /*! \brief         TBD
  *  \details       TBD
-
  *  \param[in]     TBD                       TBD
-
-
-
  *  \return        TBD
-
-
  *  \pre           -
  *  \context       TASK
  *  \reentrant     TRUE
  *  \synchronous   TRUE
  *  \diagram       HardwareGetTick.png
+ * @startuml
+ * (*) --> "Initialization
+ * if "Some Test" then
+ *  -->[true] "Some Activity"
+ *  --> "Another activity"
+ *  -right-> (*)
+ * else
+ * -->[false] "Something else"
+ * -->[Ending process] (*)
+ * endif
+ * @enduml
  *********************************************************************************************************************/
 void falling_edge_pin(pin_t pin);
 
@@ -195,19 +226,24 @@ void falling_edge_pin(pin_t pin);
  *********************************************************************************************************************/
 /*! \brief         TBD
  *  \details       TBD
-
  *  \param[in]     TBD                       TBD
-
-
-
  *  \return        TBD
-
-
  *  \pre           -
  *  \context       TASK
  *  \reentrant     TRUE
  *  \synchronous   TRUE
  *  \diagram       HardwareGetTick.png
+ * @startuml
+ * (*) --> "Initialization
+ * if "Some Test" then
+ *  -->[true] "Some Activity"
+ *  --> "Another activity"
+ *  -right-> (*)
+ * else
+ * -->[false] "Something else"
+ * -->[Ending process] (*)
+ * endif
+ * @enduml
  *********************************************************************************************************************/
 void low_pulse_pin(pin_t pin);
 
