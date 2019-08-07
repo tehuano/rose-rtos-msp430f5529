@@ -1,56 +1,37 @@
-/** ************************************************************************************************
- *  \file       Hardware.c
- *  \brief      Hardware independent part of rtos TBD
- *  \date       2019-07-01
- *  \revision   $Revision: 1.0$
- *  \author     Rommel García Hernández
- *  \copyright  Guenda Tecnología de México 2015
+/**
+ * @file       Hardware.c
+ * @brief      Hardware dependent part of RTOS
  *
- *  Implements the hardware independent part of the rtos TBD
+ * Implements the hardware dependent part of the RTOS. Configures timers and interruptions.
+ *
+ * @date       2019-07-01
+ * $Revision: 1.0$
+ * @author     Rommel García Hernández
+ * @copyright  Guenda Tecnología de México 2015
  */
 
 #include <msp430.h>
 #include "Hardware.h"
 
-/** **********************************************************************************************
- *  \brief      Hardware tick counter
- *  \range      TBD
- *  \resolution 64
- *  \unit       None
+/**
+ * @brief      Hardware tick counter
+ * @range      TBD
+ * @resolution 64
+ * @unit       None
  */
 static unsigned long long int hardware_tick;
 
-/** **********************************************************************************************
- *  \brief      Counter to make a leap in the tick counter
- *  \range
- *  \resolution 16
- *  \unit       None
+/**
+ * @brief      Counter to make a leap in the tick counter
+ * @range
+ * @resolution 16
+ * @unit       None
  */
 static unsigned int leap_cnt;
 
 /**********************************************************************************************************************
- *  HardwareInitIO()
- *********************************************************************************************************************/
-/*! \brief         Inits properly all the io interfaces
-*********************************************************************************************************************/
-void HardwareInitIO() {
-
-}
-
-/**********************************************************************************************************************
- *  HardwareToggleP47()
- *********************************************************************************************************************/
-/*! \brief         Helper funtion used to turn on and off a led at pin 4.7
-**********************************************************************************************************************/
-void HardwareToggleP47() {
-    P4OUT ^= BIT7;           /* Toggle P4.7 */
-}
-
-/**********************************************************************************************************************
  *  HardwareInitTimerA2()
  *********************************************************************************************************************/
-/*! \brief         Configures timer A2 and starts the interupt services
-**********************************************************************************************************************/
 void HardwareInitTimerA2() {
     TA2CTL   = TASSEL_1 | ID_0 | MC_1; // ACLK, Divider 1, Up mode
     TA2CCR0  = 32;
@@ -61,8 +42,6 @@ void HardwareInitTimerA2() {
 /**********************************************************************************************************************
  *  HardwareGetTick()
  *********************************************************************************************************************/
-/*! \brief         Return the value of the hardware tick counter
-**********************************************************************************************************************/
 unsigned long long int HardwareGetTick() {
     return hardware_tick;
 }
@@ -70,8 +49,30 @@ unsigned long long int HardwareGetTick() {
 /**********************************************************************************************************************
  *  Timer_A2()
  *********************************************************************************************************************/
- /*! \brief        Tick counter interruption
- *********************************************************************************************************************/
+/**
+ * @brief  Generates sys_tick
+ *
+ * Generates sys_tick by using an interrupt service called each 1 millisecond.
+ *
+ * @pre    None
+ * @post   None
+ *
+ * @param[in] pin of type pin_t with the information of the pin to be used.
+ *
+ * @return void
+ *
+ * @startuml
+ * start
+ * if (leap_cnt < NUM_OF_INTERRUPTS_ERROR) then (yes)
+ *     :hardware_tick++;
+ *     :leap_cnt++;
+ * else (no)
+ *     :hardware_tick += 2;
+ *     :leap_cnt = 0;
+ * endif
+ * stop
+ * @enduml
+ */
 #pragma vector=TIMER2_A0_VECTOR
 __interrupt void Timer_A2(void) {
     if(leap_cnt < NUM_OF_INTERRUPTS_ERROR) {
@@ -87,8 +88,6 @@ __interrupt void Timer_A2(void) {
 /**********************************************************************************************************************
  *  start_output_pin()
  *********************************************************************************************************************/
-/*! \brief        Configures a pin as output
-**********************************************************************************************************************/
 void start_output_pin(pin_t pin) {
     *(pin.pin_dir) |= pin.pin_bit; /* sets the bit as output */
     *(pin.pin_out) &= ~pin.pin_bit; /* starts to 0 */
@@ -97,8 +96,6 @@ void start_output_pin(pin_t pin) {
 /**********************************************************************************************************************
  *  rising_edge_pin()
  *********************************************************************************************************************/
-/*! \brief        Generates a transition from low to high in a pin
-**********************************************************************************************************************/
 void rising_edge_pin(pin_t pin) {
     *(pin.pin_out) |= pin.pin_bit;
 }
@@ -106,8 +103,6 @@ void rising_edge_pin(pin_t pin) {
 /**********************************************************************************************************************
  *  falling_edge_pin()
  *********************************************************************************************************************/
-/*! \brief        Generates a transition from high to low in a pin
-**********************************************************************************************************************/
 void falling_edge_pin(pin_t pin) {
     *(pin.pin_out) &= ~pin.pin_bit;
 }
@@ -115,8 +110,6 @@ void falling_edge_pin(pin_t pin) {
 /**********************************************************************************************************************
  *  low_pulse_pin()
  *********************************************************************************************************************/
-/*! \brief        Generates a low pulse in pin
-**********************************************************************************************************************/
 void low_pulse_pin(pin_t pin) {
     *(pin.pin_out) &= ~pin.pin_bit;
     __delay_cycles(10);

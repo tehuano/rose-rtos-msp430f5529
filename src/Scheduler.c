@@ -1,20 +1,22 @@
 /** ************************************************************************************************
- *  \file       Scheduler.c
- *  \brief      Hardware independent part of rtos TBD
- *  \date       2019-07-01
- *  \revision   $Revision: 1.0$
- *  \author     Rommel García Hernández
- *  \copyright  Guenda Tecnología de México
+ * @file       Scheduler.c
+ * @brief      Hardware independent part of rtos TBD
+ * @date       2019-07-01
+ * @revision   $Revision: 1.0$
+ * @author     Rommel García Hernández
+ * @copyright  Guenda Tecnología de México
  *  Implements the hardware independent part of the rtos TBD
  */
 
 #include "Task_Cfg.h"
-#include "Hardware.h"
 #include "Scheduler.h"
 
 unsigned long long int ci_time = 0;
 unsigned char tasks_init_done = FALSE;
 
+/**********************************************************************************************************************
+ *  Scheduler_InitTasks()
+ *********************************************************************************************************************/
 void Scheduler_InitTasks() {
     unsigned char idx = 0;
     for (idx = 0; idx < NUMBER_OF_TASKS; idx++) {
@@ -26,6 +28,9 @@ void Scheduler_InitTasks() {
     tasks_init_done = TRUE;
 }
 
+/**********************************************************************************************************************
+ *  Scheduler_RunTasks()
+ *********************************************************************************************************************/
 void Scheduler_RunTasks() {
     unsigned long long int start_time = 0;
     node_t *task = NULL;
@@ -41,6 +46,9 @@ void Scheduler_RunTasks() {
     }
 }
 
+/**********************************************************************************************************************
+ *  task_state_transition()
+ *********************************************************************************************************************/
 void task_state_transition(TaskControlBlock_t *task, TaskState new_state) {
     if (!task) return;
     switch(task->state) {
@@ -67,6 +75,9 @@ void task_state_transition(TaskControlBlock_t *task, TaskState new_state) {
     }
 }
 
+/**********************************************************************************************************************
+ *  update_ready_list()
+ *********************************************************************************************************************/
 void update_ready_list() {
     unsigned int idx = 0;
     unsigned long long int sys_tick = 0;

@@ -1,11 +1,14 @@
-/** ************************************************************************************************
- *  \file       list.c
- *  \brief      Implementation RTOS Kernel logic (source file)
- *  \date       2019-07-01
- *  \revision   $Revision: 1.0$
- *  \author     Rommel García Hernández
- *  \copyright  Guenda Tecnología de México
- *  Implements funtionality of RTOS kernel, scheduler and hw invocations.
+/**
+ * @file       list.c
+ * @brief      Implementation of a linked list
+ *
+ * Implements functionality and data types of a linked list. This linked list definition
+ * will be used to create the ready list of the RTOS.
+ *
+ * @date       2019-07-01
+ * $Revision: 1.0$
+ * @author     Rommel García Hernández
+ * @copyright  Guenda Tecnología de México
  */
 
 #include "list.h"
@@ -42,13 +45,12 @@ int enqueue(list_t* s, node_t* p) {
 
 node_t* dequeue(list_t* s) {
     node_t* p = NULL;
-    int ret;
     if(NULL == s) {
-        ret = VAL_ERR;
+        p = NULL;
     } else if(NULL == s->head && NULL == s->tail) {
-        ret = VAL_SUCC;
+        p = NULL;
     } else if(NULL == s->head || NULL == s->tail) {
-        ret = VAL_ERR;
+        p = NULL;
     } else {
         p = s->head;
         /* if last element */
@@ -57,7 +59,6 @@ node_t* dequeue(list_t* s) {
         } else {
             s->head = s->head->next;
         }
-        ret = VAL_SUCC;
     }
     return p;
 }

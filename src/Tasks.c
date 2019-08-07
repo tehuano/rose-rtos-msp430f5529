@@ -1,11 +1,13 @@
 /** ************************************************************************************************
- *  \file       Task.c
- *  \brief      Implementation of periodic and aperiodic tasks (source file)
- *  \date       2019-07-01
- *  \revision   $Revision: 1.0 $
- *  \author     Rommel García Hernández
- *  \copyright  Guenda Tecnología de México
- *  Implements the behavior of periodic and aperiodic tasks.
+ * @file       Tasks.c
+ * @brief      Implementation of periodic and aperiodic tasks (source file)
+ *
+ * Implementation of periodic and aperiodic tasks (source file).
+ *
+ * @date       2019-07-01
+ * $Revision: 1.0 $
+ * @author     Rommel García Hernández
+ * @copyright  Guenda Tecnología de México
  */
 
 #include <msp430.h>

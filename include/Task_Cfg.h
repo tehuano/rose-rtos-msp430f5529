@@ -1,10 +1,10 @@
 /** ************************************************************************************************
- *  \file       Task_Cfg.h
- *  \brief      Hardware independent configurtion of the TCBs (header file)
- *  \date       2019-07-01
- *  \revision   $Revision: 1.0 $
- *  \author     Rommel García-Hernández
- *  \copyright  Guenda Tecnología de México
+ * @file       Task_Cfg.h
+ * @brief      Hardware independent configurtion of the TCBs (header file)
+ * @date       2019-07-01
+ * @revision   $Revision: 1.0 $
+ * @author     Rommel García-Hernández
+ * @copyright  Guenda Tecnología de México
  *  Implements the hardware independent part of the rtos TBD
  */
 
